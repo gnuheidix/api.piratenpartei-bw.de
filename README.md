@@ -2,15 +2,21 @@
 
 ## Installation
 ### Dateistruktur
-Apache braucht Schreibzugriff auf die Verzeichnisse /app/tmp und darunterliegend.
+Apache braucht Schreibzugriff auf die Verzeichnisse /app/tmp und darunterliegend
+ cache/ logs/ sessions/ tests/
 
-heidi@julia:~/workspace/api.piratenpartei-bw.de/app/tmp$ ll
-insgesamt 16
-drwxrwx--- 5 heidi www-data 4096 2012-03-15 20:45 cache/
-drwxrwx--- 2 heidi www-data 4096 2012-03-15 21:37 logs/
-drwxrwx--- 2 heidi www-data 4096 2012-03-15 20:45 sessions/
-drwxrwx--- 2 heidi www-data 4096 2012-03-15 20:45 tests/
-
+### Datenbank
+Das folgende Schema wird momentan gebraucht.
+```
+CREATE TABLE wiki_pages ( 
+    id int(10) unsigned NOT NULL auto_increment,
+    title varchar(255) NOT NULL,
+    content text NOT NULL,
+    updated datetime default null,
+    created datetime default null,
+    PRIMARY KEY (id)
+ );
+```
 
 ### Apache-vhost
 ```
