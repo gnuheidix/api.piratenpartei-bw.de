@@ -6,7 +6,7 @@ Apache braucht Schreibzugriff auf die Verzeichnisse /app/tmp und darunterliegend
  cache/ logs/ sessions/ tests/
 
 ### Datenbank
-Die Dateien /app/Config/database_dev.php bzw. *_prod.php mit korrekten Werten
+Die Dateien /app/Config/database_dev.php bzw. database_prod.php mit korrekten Werten
 befüllen.
 
 Im DBMS die spezifizierte Datenbank anlegen. Beispiel:
@@ -28,6 +28,7 @@ a@b:~/api.piratenpartei-bw.de/app$ ./Console/cake schema create WikiDivs -v
 ### Apache-vhost
 Ein Apache-Webserver ist nach dem Vorbild der folgenden Beispielkonfiguration
 zu verarzten.
+
 ```
 <VirtualHost *:80>
     ServerAdmin webmaster@localhost
