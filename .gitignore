@@ -5,4 +5,6 @@
 /build
 /dist
 .DS_Store
+database_prod.php
+database_dev.php
 tags

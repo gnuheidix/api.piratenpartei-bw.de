@@ -1,0 +1,31 @@
+<?php
+
+/**
+ * Rename to database_prod.php and fill in
+ * the correct settings.
+ */
+class DATABASE_CONFIG {
+
+	public $default = array(
+		'datasource' => 'Database/Mysql',
+		'persistent' => false,
+		'host' => 'localhost',
+		'login' => 'root',
+		'password' => 'dev',
+		'database' => 'api_piratenpartei_bw_de',
+		'prefix' => '',
+		'encoding' => 'utf8',
+	);
+
+	public $test = array(
+		'datasource' => 'Database/Mysql',
+		'persistent' => false,
+		'host' => 'localhost',
+		'login' => 'root',
+		'password' => 'dev',
+		'database' => 'test_api_piratenpartei_bw_de',
+		'prefix' => '',
+		'encoding' => 'utf8',
+	);
+}
+?>

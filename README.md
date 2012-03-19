@@ -6,16 +6,18 @@ Apache braucht Schreibzugriff auf die Verzeichnisse /app/tmp und darunterliegend
  cache/ logs/ sessions/ tests/
 
 ### Datenbank
-Das folgende Schema wird momentan gebraucht.
+Die Dateien /app/Config/database_dev.php bzw. *_prod.php mit korrekten Werten
+befüllen.
+
+Im DBMS die spezifizierte Datenbank anlegen. Beispiel:
 ```
-CREATE TABLE wiki_pages ( 
-    id int(10) unsigned NOT NULL auto_increment,
-    title varchar(255) NOT NULL,
-    content text NOT NULL,
-    updated datetime default null,
-    created datetime default null,
-    PRIMARY KEY (id)
- );
+CREATE DATABASE api_piratenpartei_bw_de;
+```
+
+Das benötigte Datenbankschema ist mit folgendem Cake-Konsolenbefehl zu
+laden.
+```
+a@b:~/api.piratenpartei-bw.de/app$ ./Console/cake schema create WikiPages -v
 ```
 
 ### Apache-vhost
