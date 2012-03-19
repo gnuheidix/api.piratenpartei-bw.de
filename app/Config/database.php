@@ -57,27 +57,13 @@
  * unix_socket =>
  * For MySQL to connect via socket specify the `unix_socket` parameter instead of `host` and `port`
  */
-class DATABASE_CONFIG {
 
-	public $default = array(
-		'datasource' => 'Database/Mysql',
-		'persistent' => false,
-		'host' => 'localhost',
-		'login' => 'root',
-		'password' => 'dev',
-		'database' => 'api_piratenpartei_bw_de',
-		'prefix' => '',
-		//'encoding' => 'utf8',
-	);
-
-	public $test = array(
-		'datasource' => 'Database/Mysql',
-		'persistent' => false,
-		'host' => 'localhost',
-		'login' => 'user',
-		'password' => 'password',
-		'database' => 'test_database_name',
-		'prefix' => '',
-		//'encoding' => 'utf8',
-	);
+if( empty(    $_SERVER['SERVER_ADDR']) 
+          || (strpos($_SERVER['SERVER_ADDR'], '192.168.') === 0)
+          || (strpos($_SERVER['SERVER_ADDR'], '127.0.') === 0)
+          ){ 
+    require "database_dev.php";
+}else{
+    require "database_prod.php";
 }
+
