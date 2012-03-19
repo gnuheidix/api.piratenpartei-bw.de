@@ -112,6 +112,8 @@ class WikiController extends AppController {
                 , 'src="http://wiki.piratenpartei.de/wiki/images/'
                 , $content
             );
+            // remove comments
+            $content = preg_replace('/<!--(.*)-->/Uis', '', $content);
             
             // read, update, save
             $data = $this->WikiPage->findByTitle($title);

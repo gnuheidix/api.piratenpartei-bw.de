@@ -12,9 +12,9 @@
  * cake schema create wiki_pages
  *
  */
-class WikiPagesSchema extends CakeSchema {
+class WikiDivsSchema extends CakeSchema {
 
-	public $name = 'WikiPages';
+	public $name = 'WikiDivs';
 
 	public function before($event = array()) {
 		return true;
@@ -23,13 +23,13 @@ class WikiPagesSchema extends CakeSchema {
 	public function after($event = array()) {
 	}
 
-	public $wiki_pages = array(
+	public $wiki_divs = array(
 			'id' => array('type'=>'integer', 'null' => false, 'length' => 10, 'key' => 'primary'),
-			'title' => array('type'=>'string', 'null' => false, 'length' => 255, 'key' => 'index'),
+			'page_id' => array('type'=>'integer', 'null' => false, 'length' => 10, 'key' => 'index'),
 			'content' => array('type'=>'text', 'null' => true, 'default' => NULL),
-			'updated' => array('type'=>'datetime', 'null' => false),
+			'requested' => array('type'=>'datetime', 'null' => false),
 			'created' => array('type'=>'datetime', 'null' => false),
-			'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'title' => array('column' => 'title', 'unique' => 1))
+			'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'page_id' => array('column' => 'page_id'))
 		);
 
 }
