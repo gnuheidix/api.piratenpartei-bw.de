@@ -3,8 +3,8 @@ class WikiPage extends AppModel {
     public $name = 'WikiPage';
     
     public $hasMany = array(
-        'WikiDiv' => array(
-            'className'     => 'WikiDiv',
+        'WikiElement' => array(
+            'className'     => 'WikiElement',
             'foreignKey'    => 'page_id',
             'dependent'     => true // delete if the WikiPage gets deleted
         )
