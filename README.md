@@ -22,7 +22,7 @@ a@b:~/api.piratenpartei-bw.de/app$ ./Console/cake schema create WikiPages -v
 ```
 
 ```
-a@b:~/api.piratenpartei-bw.de/app$ ./Console/cake schema create WikiDivs -v
+a@b:~/api.piratenpartei-bw.de/app$ ./Console/cake schema create WikiElements -v
 ```
 
 ### Apache-vhost

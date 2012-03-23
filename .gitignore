@@ -8,3 +8,7 @@
 database_prod.php
 database_dev.php
 tags
+.buildpath
+.project
+.settings/
+
