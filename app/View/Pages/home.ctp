@@ -17,6 +17,5 @@
  */
 ?>
 <p>Diese Webapplikation stellt maschinenauslesbare Informationen rund um die Piratenpartei Baden-Württemberg zur Verfügung.</p>
-<p>Die folgendenen Funktionalitäten stehen zur Verfügung.</p>
 <h2><a href="/wiki">wiki</a></h2>
-<p>Beschreibung...</p>
+<p>Bietet komfortablen Zugriff auf Inhalte des Piratenwikis.</p>

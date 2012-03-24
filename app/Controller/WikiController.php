@@ -114,10 +114,47 @@ class WikiController extends AppController{
                 $content = 'Die Wikiseite konnte nicht vom Wiki abgerufen'
                     .' werden und befindet sich nicht (mehr) im Speicher. :(';
             }
-        }else{ pr($params); exit;
+        }else{
             $content = 'Der Aufruf schlug aufgrund fehlerhafter Eingaben fehl.';
         }
         $this->set('content', $content);
+    }
+    
+    /**
+     * Delivers a page from another website without the bloaty
+     * HTML stuff around it.
+     */
+    public function getpage(){
+        $this->layout = 'ajax';
+        $this->view = 'get';
+        $content = ':(';
+        
+        $params = $this->parseGetParams($this->params);
+        if(!empty($params)){
+            extract($params);
+        
+            // lookup the WikiPage or fetch it
+            $this->WikiPage->recursive = -1;
+            $wikipage = $this->WikiPage->findByTitle($title);
+            if(empty($wikipage)){
+                $wikipage = $this->updateWikiPage($title);
+            }
+        
+            if(empty($wikipage['WikiPage'])){
+                $content = 'Die Wikiseite '.$title.' wurde nicht gefunden. :(';
+            }else{
+                $content = $wikipage['WikiPage']['content'];
+            }
+        }else{
+            $content = 'Der Aufruf schlug aufgrund fehlerhafter Eingaben fehl.';
+        }
+        $this->set('content', $content);
+    }
+    
+    public function getpagehtml(){
+        $this->getpage();
+        $this->layout = 'barebone';
+        $this->view = 'get';
     }
     
     /**
