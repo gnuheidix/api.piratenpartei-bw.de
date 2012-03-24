@@ -249,7 +249,8 @@ class WikiController extends AppController{
         // Load into DOMDocument and extract the element
         $dom = new DOMDocument('1.0', 'utf-8');
         $dom->loadHTML(utf8_decode($html));
-        $content = $dom->getElementByID($id);
+        $xpath = new DOMXPath($dom);
+        $content = $xpath->query("//*[@id='$id']")->item(0);
         if(isset($content)){
             // TODO update image urls
             
