@@ -23,14 +23,14 @@
 
 /** General Style Info **/
 body {
-	background: #003d4c;
+	background: #FF8800;
 	color: #fff;
 	font-family:'lucida grande',verdana,helvetica,arial,sans-serif;
 	font-size:90%;
 	margin: 0;
 }
 a {
-	color: #003d4c;
+	color: #000;
 	text-decoration: underline;
 	font-weight: bold;
 }
@@ -52,13 +52,13 @@ h1 {
 }
 h2 {
 	background:#fff;
-	color: #e32;
-	font-family:'Gill Sans','lucida grande', helvetica, arial, sans-serif;
+	color: #000;
+	font-family:sans-serif;
 	font-size: 190%;
 }
 h3 {
 	color: #2c6877;
-	font-family:'Gill Sans','lucida grande', helvetica, arial, sans-serif;
+	font-family:sans-serif;
 	font-size: 165%;
 }
 h4 {
@@ -82,21 +82,11 @@ p {
 }
 #header h1 {
 	line-height:20px;
-	background: #003d4c url('../img/cake.icon.png') no-repeat left;
-	color: #fff;
+	background: url('../img/piraten-mini.png') no-repeat left;
+	color: #000;
 	padding: 0px 30px;
 }
-#header h1 a {
-	color: #fff;
-	background: #003d4c;
-	font-weight: normal;
-	text-decoration: none;
-}
-#header h1 a:hover {
-	color: #fff;
-	background: #003d4c;
-	text-decoration: underline;
-}
+
 #content{
 	background: #fff;
 	clear: both;
@@ -312,7 +302,7 @@ label {
 input, textarea {
 	clear: both;
 	font-size: 140%;
-	font-family: "frutiger linotype", "lucida grande", "verdana", sans-serif;
+	font-family: sans-serif;
 	padding: 1%;
 	width:98%;
 }

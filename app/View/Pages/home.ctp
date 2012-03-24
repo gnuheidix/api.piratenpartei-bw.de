@@ -16,8 +16,7 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 ?>
-<h2>api.piratenpartei-bw.de</h2>
 <p>Diese Webapplikation stellt maschinenauslesbare Informationen rund um die Piratenpartei Baden-Württemberg zur Verfügung.</p>
 <p>Die folgendenen Funktionalitäten stehen zur Verfügung.</p>
-<h3><a href="/wiki">wiki</a></h3>
+<h2><a href="/wiki">wiki</a></h2>
 <p>Beschreibung...</p>

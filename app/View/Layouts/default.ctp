@@ -15,15 +15,13 @@
  * @since         CakePHP(tm) v 0.10.0.1076
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-
-$siteTitle = $title_for_layout.' - api.piratenpartei.bw.de';
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<?php echo $this->Html->charset(); ?>
 	<title>
-		<?php echo $siteTitle; ?>
+		<?php echo $title_for_layout.' - api.piratenpartei.bw.de'; ?>
 	</title>
 	<?php
 		echo $this->Html->meta('icon');
@@ -37,7 +35,7 @@ $siteTitle = $title_for_layout.' - api.piratenpartei.bw.de';
 <body>
 	<div id="container">
 		<div id="header">
-			<h1><a href="/"><?php echo $siteTitle; ?></a></h1>
+			<h1><?php echo $title_for_layout; ?> - <a href="/">api.piratenpartei.bw.de</a></h1>
 		</div>
 		<div id="content">
 
@@ -46,7 +44,7 @@ $siteTitle = $title_for_layout.' - api.piratenpartei.bw.de';
 			<?php echo $this->fetch('content'); ?>
 		</div>
 		<div id="footer">
-            
+            <a href="http://www.piratenpartei-bw.de/impressum/">Impressum</a>
 		</div>
 	</div>
 	<?php echo $this->element('sql_dump'); ?>
