@@ -57,11 +57,9 @@
  * unix_socket =>
  * For MySQL to connect via socket specify the `unix_socket` parameter instead of `host` and `port`
  */
-
-if( empty(    $_SERVER['SERVER_ADDR']) 
-          || (strpos($_SERVER['SERVER_ADDR'], '192.168.') === 0)
-          || (strpos($_SERVER['SERVER_ADDR'], '127.0.') === 0)
-          ){ 
+if(!empty($_SERVER['SERVER_ADDR'])
+    && ((strpos($_SERVER['SERVER_ADDR'], '192.168.') === 0)
+    || (strpos($_SERVER['SERVER_ADDR'], '127.0.') === 0))){ 
     require "database_dev.php";
 }else{
     require "database_prod.php";
