@@ -24,7 +24,7 @@ class WikiPage extends AppModel {
      * @param string $title The title of the page to be updated.
      * @return The updated WikiPage dataset or false it sth. went wrong.
      */
-    protected function updateWikiPage($title){
+    public function updateWikiPage($title){
         // request page from wiki
         $content = @file_get_contents($this->wikiBaseUrl . $title);
         $retval = false;

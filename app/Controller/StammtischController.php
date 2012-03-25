@@ -101,7 +101,7 @@ class StammtischController extends AppController{
     /**
      * Delivers a page from another website without the bloaty
      * HTML stuff around it.
-     */
+     *
     public function getpage(){
         $this->layout = 'ajax';
         $this->view = 'get';
@@ -127,7 +127,7 @@ class StammtischController extends AppController{
         }
         $this->set('content', $content);
     }
-    
+    */
     // ############## CONVENIENCE METHODS ################
     /**
      * 
