@@ -16,6 +16,10 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 ?>
-<p>Diese Webapplikation stellt maschinenauslesbare Informationen rund um die Piratenpartei Baden-Württemberg zur Verfügung.</p>
-<h2><a href="/wiki">wiki</a></h2>
-<p>Bietet komfortablen Zugriff auf Inhalte des Piratenwikis.</p>
+<p>Diese Webapplikation stellt maschinenauslesbare Informationen rund um die Piratenpartei Baden-Württemberg zur Verfügung. Als Datenquelle dient das <a href="http://wiki.piratenpartei.de">Piratenwiki</a>.</p>
+<dl>
+    <dt><a href="/wiki">wiki</a></dt>
+    <dd>bietet komfortablen Zugriff auf Inhalte</dd>
+    <dt><a href="/stammtisch">stammtisch</a></dt>
+    <dd>stellt Informationen der Stammtische dar</dd>
+</dl>

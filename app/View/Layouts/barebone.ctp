@@ -25,6 +25,10 @@ $siteTitle = $title_for_layout.' - api.piratenpartei.bw.de';
 	<title>
 		<?php echo $siteTitle; ?>
 	</title>
+	<?php 
+	    echo $this->fetch('css');
+        echo $this->fetch('script');
+    ?>
 </head>
 <body>
 	<?php echo $this->fetch('content'); ?>
