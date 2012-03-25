@@ -74,7 +74,7 @@ class WikiController extends AppController{
         $this->layout = 'ajax';
         $content = ':(';
         
-        $params = $this->parseGetParams($this->params);
+        $params = $this->parseGetParamsWithId($this->params);
         if(!empty($params)){
             extract($params);
             
@@ -129,17 +129,16 @@ class WikiController extends AppController{
         $this->view = 'get';
         $content = ':(';
         
-        $params = $this->parseGetParams($this->params);
-        if(!empty($params)){
-            extract($params);
-        
+        $title = $this->parseGetParams($this->params);
+        if(!empty($title)){
+            
             // lookup the WikiPage or fetch it
             $this->WikiPage->recursive = -1;
             $wikipage = $this->WikiPage->findByTitle($title);
             if(empty($wikipage)){
                 $wikipage = $this->updateWikiPage($title);
             }
-        
+            
             if(empty($wikipage['WikiPage'])){
                 $content = 'Die Wikiseite '.$title.' wurde nicht gefunden. :(';
             }else{
@@ -177,7 +176,7 @@ class WikiController extends AppController{
      * @return array The extracted title and elementId or false if something
      *     bad happended.
      */
-    protected function parseGetParams($paramsObject){
+    protected function parseGetParamsWithId($paramsObject){
         $retval = false;
         
         if(!empty($paramsObject)
@@ -206,6 +205,34 @@ class WikiController extends AppController{
             }
         }
         
+        return $retval;
+    }
+    
+    /**
+     * Parses a client request and extracts title
+     * http://url.tld/CONTROLLER/ACTION/TITLE_WITH_SLASHES
+     * @param Object $paramsObject The object "params" of the client request.
+     *     (usually $this->params)
+     * @return title The extracted page title false if something bad happended.
+     */
+    protected function parseGetParams($paramsObject){
+        $retval = false;
+        
+        if(!empty($paramsObject)
+                && !empty($paramsObject->params['pass'])){
+            // extract title and id of the requested wiki page
+            $replaceUrl = $paramsObject->params['controller']
+            .'/'
+            .$paramsObject->params['action']
+            .'/'
+            ;
+            $url = substr($this->params->url, strlen($replaceUrl));
+            
+            if(!empty($url)){
+                $retval = $url;
+            }
+        }
+    
         return $retval;
     }
     

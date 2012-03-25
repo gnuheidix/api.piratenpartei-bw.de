@@ -87,6 +87,14 @@ p {
 	padding: 0px 30px;
 }
 
+#header ul, #footer ul{
+    list-style-type:none;
+}
+
+#header ul li, #footer ul li{
+    display: inline;
+}
+
 #content{
 	background: #fff;
 	clear: both;
@@ -99,6 +107,7 @@ p {
 	padding: 6px 10px;
 	text-align: right;
 }
+
 
 /** containers **/
 div.form,
