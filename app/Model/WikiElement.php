@@ -19,19 +19,19 @@ class WikiElement extends AppModel {
      * @param string $elementId The HTML element id which should be stored
      *     within the WikiElement
      */
-    protected function updateWikiElement($wikipage, $elementId){
+    public function updateWikiElement($wikipage, $elementId){
         $pageId = $wikipage['WikiPage']['id'];
         $pageContent = $wikipage['WikiPage']['content'];
         $content = $this->extractElement($pageContent, $elementId);
         $retval = array();
         if(!empty($content)){
-            $this->WikiElement->create();
-            $data = $this->WikiElement->findByPageIdAndElementId($pageId, $elementId);
+            $this->create();
+            $data = $this->findByPageIdAndElementId($pageId, $elementId);
             $data['WikiElement']['page_id'] = $pageId;
             $data['WikiElement']['element_id'] = $elementId;
             $data['WikiElement']['content'] = $content;
-            $this->WikiElement->save($data);
-            $data['WikiElement']['id'] = $this->WikiElement->id;
+            $this->save($data);
+            $data['WikiElement']['id'] = $this->id;
             $retval = $data;
         }
         return $retval;

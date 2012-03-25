@@ -78,7 +78,7 @@ class WikiController extends AppController{
             $this->WikiPage->recursive = -1;
             $wikipage = $this->WikiPage->findByTitle($title);
             if(empty($wikipage)){
-                $wikipage = $this->updateWikiPage($title);
+                $wikipage = $this->WikiPage->updateWikiPage($title);
             }
             
             if(!empty($wikipage['WikiPage'])){
@@ -132,7 +132,7 @@ class WikiController extends AppController{
             $this->WikiPage->recursive = -1;
             $wikipage = $this->WikiPage->findByTitle($title);
             if(empty($wikipage)){
-                $wikipage = $this->updateWikiPage($title);
+                $wikipage = $this->WikiPage->updateWikiPage($title);
             }
             
             if(empty($wikipage['WikiPage'])){
