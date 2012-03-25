@@ -62,11 +62,23 @@ h3 {
 	font-size: 165%;
 }
 h4 {
-	color: #993;
+	color: #2c6877;
 	font-weight: normal;
 }
 ul, li {
 	margin: 0 12px;
+}
+ul {
+    margin-bottom: 1em;
+}
+iframe {
+    margin: 1em;
+    width: 320px;
+    height: 240px;
+}
+.karte{
+    width: 640px;
+    height: 480px;
 }
 p {
 	margin: 0 0 1em 0;
@@ -233,7 +245,6 @@ table td.actions a {
 dl {
 	line-height: 2em;
 	margin: 0em 0em;
-	width: 60%;
 }
 dl dd:nth-child(4n+2),
 dl dt:nth-child(4n+1) {

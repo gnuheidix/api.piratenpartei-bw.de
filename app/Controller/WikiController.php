@@ -37,8 +37,8 @@ class WikiController extends AppController{
      * Helpers in use
      * @var array
      */
-    public $helpers = array('Html', 'Session');
-
+    public $helpers = array('Html');
+    
     /**
      * Models in use
      * @var array
@@ -51,18 +51,14 @@ class WikiController extends AppController{
      */
     private $idDivider = '/';
     
-    /**
-     * The URL of the wiki. Just the name of the page has to be added
-     * for proper retrival.
-     */
-    private $wikiBaseUrl = 'http://wiki.piratenpartei.de/wiki//index.php?action=render&title=';
+    
     
     // ############## PUBLICLY ACCESSIBLE METHODS ################
     /**
      * Displays a static manual page
      */
     public function index() {
-        // see /app/View/Wikis/index.ctp
+        // see /app/View/Wiki/index.ctp
     }
     
     /**
@@ -92,7 +88,7 @@ class WikiController extends AppController{
                 $this->WikiElement->recursive = -1;
                 $wikielement = $this->WikiElement->findByPageIdAndElementId($wikipage['WikiPage']['id'], $elementId);
                 if(empty($wikielement)){
-                    $wikielement = $this->updateWikiElement($wikipage, $elementId);
+                    $wikielement = $this->WikiElement->updateWikiElement($wikipage, $elementId);
                 }
                 
                 // prepare the WikiElement for being delivered 
@@ -233,102 +229,6 @@ class WikiController extends AppController{
             }
         }
     
-        return $retval;
-    }
-    
-    /**
-     * TODO move to model
-     * Updates the dataset of a certain WikiElement. If the dataset doesn't
-     * exist, it will be deleted.
-     * @param array $wikipage A WikiPage dataset the new WikiElement
-     *     should be updated with.
-     * @param string $elementId The HTML element id which should be stored
-     *     within the WikiElement
-     */
-    protected function updateWikiElement($wikipage, $elementId){
-        $pageId = $wikipage['WikiPage']['id'];
-        $pageContent = $wikipage['WikiPage']['content'];
-        $content = $this->extractElement($pageContent, $elementId);
-        $retval = array();
-        if(!empty($content)){
-            $this->WikiElement->create();
-            $data = $this->WikiElement->findByPageIdAndElementId($pageId, $elementId);
-            $data['WikiElement']['page_id'] = $pageId;
-            $data['WikiElement']['element_id'] = $elementId;
-            $data['WikiElement']['content'] = $content;
-            $this->WikiElement->save($data);
-            $data['WikiElement']['id'] = $this->WikiElement->id;
-            $retval = $data;
-        }
-        return $retval;
-    }
-    
-    /**
-     * TODO move to model
-     * Updates the dataset of a certain WikiPage. If the dataset for the
-     * specified page doesn't exist, he will be created.
-     * @param string $title The title of the page to be updated.
-     * @return The updated WikiPage dataset.
-     */
-    protected function updateWikiPage($title){
-        // request page from wiki
-        $content = @file_get_contents($this->wikiBaseUrl . $title);
-        $retval = false;
-        if($content !== FALSE){
-            
-            $content = str_replace( // TODO check if it's clever to do here
-                'src="/wiki/images/'
-                , 'src="http://wiki.piratenpartei.de/wiki/images/'
-                , $content
-            );
-            
-            // remove comments
-            $content = preg_replace('/<!--(.*)-->/Uis', '', $content);
-            
-            // read, update, save
-            $data = $this->WikiPage->findByTitle($title);
-            $data['WikiPage']['title'] = $title;
-            $data['WikiPage']['content'] = $content;
-            $updateAgainAt = time() + 3600; // now + 1h
-            $data['WikiPage']['updated'] = date('Y-m-d H:i:s',$updateAgainAt );
-            $this->WikiPage->save($data);
-            $data['WikiPage']['id'] = $this->WikiPage->id;
-            
-            $retval = $data;
-        }
-        return $retval;
-    }
-    
-    /**
-     * TODO move to libs
-     * Extracts an element from HTML which holds a specific element id.
-     * @param string $html The utf8-encoded HTML string to parse.
-     * @param string $id The element id of the element to extract.
-     * @return string The extracted element as HTML or an empty string in case
-     *     the element was not found.
-     */
-    protected function extractElement($html, $id){
-        $retval = '';
-        
-        // Load into DOMDocument and extract the element
-        $dom = new DOMDocument('1.0', 'utf-8');
-        $dom->loadHTML(utf8_decode($html));
-        $xpath = new DOMXPath($dom);
-        $content = $xpath->query("//*[@id='$id']")->item(0);
-        if(isset($content)){
-            // TODO update image urls
-            
-            // copy the content over to an empty DOM
-            $children = $content->childNodes;
-            foreach($children as $child){
-                $document = new DOMDocument('1.0', 'utf-8');
-                $document->appendChild($document->importNode($child,true));
-                $retval .= $document->saveHTML();
-            }
-        }
-        
-        $retval = str_replace('<br>', '<br/>', $retval);
-        $retval = trim ($retval);
         return $retval;
     }
 }
