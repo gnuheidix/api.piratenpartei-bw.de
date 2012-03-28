@@ -4,9 +4,11 @@
 ### Dateistruktur
 Apache braucht Schreibzugriff auf die Verzeichnisse /app/tmp und darunterliegend
  cache/ logs/ sessions/ tests/
+ 
+Hierfür kann auch das Skript createTempDirectory.sh verwendet werden.
 
 ### Datenbank
-Die Dateien /app/Config/database_dev.php bzw. database_prod.php mit korrekten Werten
+Die Dateien /app/Config/database.php.default nach /app/Config/database.php kopieren und mit korrekten Werten
 befüllen.
 
 Im DBMS die spezifizierte Datenbank anlegen. Beispiel:
@@ -24,6 +26,9 @@ a@b:~/api.piratenpartei-bw.de/app$ ./Console/cake schema create WikiPages -v
 ```
 a@b:~/api.piratenpartei-bw.de/app$ ./Console/cake schema create WikiElements -v
 ```
+
+### Konfiguration
+Die Dateien /app/Config/core.php.default nach /app/Config/core.php kopieren und die Werte der Schlüssel debug, Security.salt, Security.cypherSeed anpassen.
 
 ### Apache-vhost
 Ein Apache-Webserver ist nach dem Vorbild der folgenden Beispielkonfiguration
