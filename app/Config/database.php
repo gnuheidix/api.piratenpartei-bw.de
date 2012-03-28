@@ -61,7 +61,11 @@ if(!empty($_SERVER['SERVER_ADDR'])
     && ((strpos($_SERVER['SERVER_ADDR'], '192.168.') === 0)
     || (strpos($_SERVER['SERVER_ADDR'], '127.0.') === 0))){ 
     require "database_dev.php";
+    Configure::write('debug', 0);
+
 }else{
     require "database_prod.php";
+    Configure::write('debug', 2);
+
 }
 
