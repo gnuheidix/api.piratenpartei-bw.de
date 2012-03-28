@@ -1,4 +1,7 @@
-<p>Diese Funktion dient hauptsächlich dazu, um Inhalte des Piratenwikis zu extrahieren. Sämtliche Inhalte werden auch bei einem Ausfall des Piratenwikis zur Verfügung stehen und regelmäßig aktualisiert.</p>
+<p>Diese Hauptfunktion dient hauptsächlich dazu, um Inhalte des Piratenwikis zu extrahieren. Sämtliche Inhalte werden auch bei einem Ausfall des Piratenwikis zur Verfügung stehen und regelmäßig aktualisiert.</p>
+<ul>
+    <li><a href="/wiki/statistik">Statistik</a></li>
+</ul>
 <h2>Teil einer Wikiseite</h2>
 <p>Die folgenden Funktionen erwarten nach dem letzten <strong>/</strong> die ID des Elements der Wikiseite, welches zurückzuliefern ist. Im Wiki muss der zu extrahierende Teil mit einer auf der Seite einmaligen ID versehen werden. Dies lässt sich beispielsweise mit <em>&lt;div id="einmalig"&gt; ...zu extrahierender Inhalt... &lt;/div&gt;</em> erreichen.</p>
 <h3>gethtml</h3>

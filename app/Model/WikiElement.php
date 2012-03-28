@@ -1,7 +1,13 @@
 <?php
+APP::import('Model', 'WikiPage');
+
 class WikiElement extends AppModel {
     public $name = 'WikiElement';
     
+    /**
+     * outgoing link to WikiPage
+     * @var array
+     */
     public $belongsTo = array(
         'WikiPage' => array(
             'className'    => 'WikiPage',
@@ -12,16 +18,45 @@ class WikiElement extends AppModel {
     // TODO validation needed
     
     /**
+     * Retrieves a certain WikiElement from model / external source
+     * @param string $pageTitle The title of the wikipage where to extract the
+     *     page element.
+     * @param string $elementId The ID of the element to look for within
+     *     the page.
+     * @return array The retrieved WikiElement or false if sth. went wrong.
+     */
+    public function getElement($pageTitle, $elementId){
+        $wikiPageObj = new WikiPage();
+        $wikiPage = $wikiPageObj->getPage($pageTitle);
+        $wikiElement = false;
+        
+        if(!empty($wikiPage['WikiPage']['id'])){
+            $pageId = $wikiPage['WikiPage']['id'];
+            $wikiElement = $this->findByPageIdAndElementId($pageId, $elementId);
+            
+            if(!empty($wikiElement['WikiElement']['id'])){
+                // update access time
+                $this->id = $wikiElement['WikiElement']['id'];
+                $this->saveField('requested', date('Y-m-d H:i:s', time()));
+            }else{
+                $wikiElement = $this->updateWikiElement($wikiPage, $elementId);
+            }
+        }
+        return $wikiElement;
+    }
+    
+    /**
      * Updates the dataset of a certain WikiElement. If the dataset doesn't
      * exist, it will be deleted.
-     * @param array $wikipage A WikiPage dataset the new WikiElement
+     * @param array $wikiPage A WikiPage dataset the new WikiElement
      *     should be updated with.
      * @param string $elementId The HTML element id which should be stored
      *     within the WikiElement
+     * @return array The updated WikiElement dataset or false if sth. went wrong
      */
-    public function updateWikiElement($wikipage, $elementId){
-        $pageId = $wikipage['WikiPage']['id'];
-        $pageContent = $wikipage['WikiPage']['content'];
+    public function updateWikiElement($wikiPage, $elementId){
+        $pageId = $wikiPage['WikiPage']['id'];
+        $pageContent = $wikiPage['WikiPage']['content'];
         $content = $this->extractElement($pageContent, $elementId);
         $retval = array();
         if(!empty($content)){
@@ -30,6 +65,7 @@ class WikiElement extends AppModel {
             $data['WikiElement']['page_id'] = $pageId;
             $data['WikiElement']['element_id'] = $elementId;
             $data['WikiElement']['content'] = $content;
+            $data['WikiElement']['requested'] =  date('Y-m-d H:i:s', time());
             $this->save($data);
             $data['WikiElement']['id'] = $this->id;
             $retval = $data;
@@ -38,7 +74,6 @@ class WikiElement extends AppModel {
     }
     
     /**
-     * TODO move to libs
      * Extracts an element from HTML which holds a specific element id.
      * @param string $html The utf8-encoded HTML string to parse.
      * @param string $id The element id of the element to extract.

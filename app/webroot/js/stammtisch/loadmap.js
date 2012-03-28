@@ -8,7 +8,7 @@ var map = new L.Map('map', {
 });
 
 var MyIcon = L.Icon.extend({
-    iconUrl: 'img/pin.png',
+    iconUrl: '/img/stammtisch/pin.png',
     iconSize: new L.Point(57, 34),
     iconAnchor: new L.Point(0, 33),
     popupAnchor: new L.Point(18, -33)
@@ -18,7 +18,7 @@ map.addLayer(cloudmade);
 
 var bawue = new L.Polygon(BaWueCoordinates, {color:'#F80',fillColor:'#F80',smoothFactor:5});
 map.addLayer(bawue);
-/*
+
 for(i = 0; i < stammtische.length; i++) {
     s = stammtische[i];
     text = "<h1>" + s.Typ + "&nbsp;" + s.Ort + "</h1>"
@@ -45,4 +45,3 @@ for(i = 0; i < stammtische.length; i++) {
         map.addLayer(marker);
     }
 }
-*/
