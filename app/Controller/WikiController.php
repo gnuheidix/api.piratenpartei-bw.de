@@ -45,20 +45,29 @@ class WikiController extends AppController{
      */
     public $uses = array('WikiPage', 'WikiElement');
     
-    /**
-     * Determines the divider within the request URLs between
-     * wiki url and div id.
-     */
-    private $idDivider = '/';
-    
-    
-    
     // ############## PUBLICLY ACCESSIBLE METHODS ################
     /**
      * Displays a static manual page
      */
     public function index() {
         // see /app/View/Wiki/index.ctp
+    }
+    
+    /**
+     * Displays a short database summary
+     */
+    public function statistik(){
+        $pageCount = $this->WikiPage->find('count');
+        $elementCount = $this->WikiElement->find('count');
+        $wikiPages = $this->WikiPage->find('all'
+            , array('recursive' => 1
+                    ,'fields' => array('WikiPage.title')
+            )
+        );
+        
+        $this->set('page_count', $pageCount);
+        $this->set('element_count', $elementCount);
+        $this->set('wiki_pages', $wikiPages);
     }
     
     /**
@@ -75,40 +84,15 @@ class WikiController extends AppController{
             extract($params);
             
             // lookup the WikiPage or fetch it
-            $this->WikiPage->recursive = -1;
-            $wikipage = $this->WikiPage->findByTitle($title);
-            if(empty($wikipage)){
-                $wikipage = $this->WikiPage->updateWikiPage($title);
-            }
-            
-            if(!empty($wikipage['WikiPage'])){
-                $content = 'Die Wikiseite '.$title.' wurde gefunden.';
-                
-                // lookup the WikiElement or extract it
-                $this->WikiElement->recursive = -1;
-                $wikielement = $this->WikiElement->findByPageIdAndElementId($wikipage['WikiPage']['id'], $elementId);
-                if(empty($wikielement)){
-                    $wikielement = $this->WikiElement->updateWikiElement($wikipage, $elementId);
-                }
-                
+            $wikiElement = $this->WikiElement->getElement($title, $elementId);
+            if(!empty($wikiElement)){
                 // prepare the WikiElement for being delivered 
-                // and update the access time
-                if(!empty($wikielement['WikiElement'])){
-                    $content = $wikielement['WikiElement']['content'];
-                    $this->WikiElement->id = $wikielement['WikiElement']['id'];
-                    $this->WikiElement->saveField(
-                        'requested'
-                        , date('Y-m-d H:i:s', time())
-                    );
-                }else{
-                    $content .= ' Das Element mit der ID "'
-                        .$elementId
-                        .'" wurde innerhalb der Wikiseite nicht gefunden.'
-                    ;
-                }
+                $content = $wikiElement['WikiElement']['content'];
             }else{
-                $content = 'Die Wikiseite konnte nicht vom Wiki abgerufen'
-                    .' werden und befindet sich nicht (mehr) im Speicher. :(';
+                $content .= ' Das Element mit der ID "'
+                    .$elementId
+                    .'" wurde innerhalb der Wikiseite nicht gefunden.'
+                ;
             }
         }else{
             $content = 'Der Aufruf schlug aufgrund fehlerhafter Eingaben fehl.';
@@ -128,13 +112,8 @@ class WikiController extends AppController{
         $title = $this->parseGetParams($this->params);
         if(!empty($title)){
             
-            // lookup the WikiPage or fetch it
-            $this->WikiPage->recursive = -1;
-            $wikipage = $this->WikiPage->findByTitle($title);
-            if(empty($wikipage)){
-                $wikipage = $this->WikiPage->updateWikiPage($title);
-            }
-            
+            // lookup the WikiPage
+            $wikipage = $this->WikiPage->getPage($title);
             if(empty($wikipage['WikiPage'])){
                 $content = 'Die Wikiseite '.$title.' wurde nicht gefunden. :(';
             }else{
@@ -175,8 +154,7 @@ class WikiController extends AppController{
     protected function parseGetParamsWithId($paramsObject){
         $retval = false;
         
-        if(!empty($paramsObject)
-            && count($paramsObject->params['pass']) > 1){
+        if(!empty($paramsObject)){
             // extract title and id of the requested wiki page
             $replaceUrl = $paramsObject->params['controller']
                 .'/'
@@ -185,7 +163,7 @@ class WikiController extends AppController{
             ;
             
             $url = substr($this->params->url, strlen($replaceUrl));
-            $dividerPos = strrpos($url, $this->idDivider);
+            $dividerPos = strrpos($url, '/');
             
             $title = substr($url, 0, $dividerPos);
             $elementId = substr($url, $dividerPos + 1);
@@ -214,13 +192,12 @@ class WikiController extends AppController{
     protected function parseGetParams($paramsObject){
         $retval = false;
         
-        if(!empty($paramsObject)
-                && !empty($paramsObject->params['pass'])){
+        if(!empty($paramsObject)){
             // extract title and id of the requested wiki page
             $replaceUrl = $paramsObject->params['controller']
-            .'/'
-            .$paramsObject->params['action']
-            .'/'
+                .'/'
+                .$paramsObject->params['action']
+                .'/'
             ;
             $url = substr($this->params->url, strlen($replaceUrl));
             
@@ -228,7 +205,7 @@ class WikiController extends AppController{
                 $retval = $url;
             }
         }
-    
+        
         return $retval;
     }
 }

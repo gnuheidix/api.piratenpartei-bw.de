@@ -5,13 +5,9 @@
         , array('inline' => false )
     );
     $this->Html->script(
-        array('stammtisch/leaflet/leaflet','stammtisch/bw')
+        array('stammtisch/leaflet/leaflet','stammtisch/bw', 'stammtisch/data')
         , array('inline' => false )
     );
-    echo $this->Html->scriptBlock('
-    
-    ');
-
 ?>
 <div id="map"></div>
 <?php 
