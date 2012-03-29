@@ -7,6 +7,9 @@ Apache braucht Schreibzugriff auf die Verzeichnisse /app/tmp und darunterliegend
  
 Hierfür kann auch das Skript createTempDirectory.sh verwendet werden.
 
+Weiter sollte die Datei /app/webroot/js/stammtisch/data.js für Apache
+schreibbar sein.
+
 ### Datenbank
 Die Dateien /app/Config/database.php.default nach /app/Config/database.php kopieren und mit korrekten Werten
 befüllen.
@@ -27,6 +30,9 @@ a@b:~/api.piratenpartei-bw.de/app$ ./Console/cake schema create WikiPages -v
 a@b:~/api.piratenpartei-bw.de/app$ ./Console/cake schema create WikiElements -v
 ```
 
+```
+a@b:~/api.piratenpartei-bw.de/app$ ./Console/cake schema create WikiImages -v
+```
 ### Konfiguration
 Die Dateien /app/Config/core.php.default nach /app/Config/core.php kopieren und die Werte der Schlüssel debug, Security.salt, Security.cypherSeed anpassen.
 

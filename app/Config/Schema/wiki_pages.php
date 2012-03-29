@@ -2,14 +2,14 @@
 /**
  * This is i18n Schema file
  *
- * Use it to configure database for WikiPage-Model
+ * Use it to configure database
  *
  */
 
 /*
  *
  * Using the Schema command line utility
- * cake schema create wiki_pages
+ * cake schema create WikiPages
  *
  */
 class WikiPagesSchema extends CakeSchema {
@@ -31,6 +31,6 @@ class WikiPagesSchema extends CakeSchema {
             'updated' => array('type'=>'datetime', 'null' => false),
             'created' => array('type'=>'datetime', 'null' => false),
             'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'title' => array('column' => 'title', 'unique' => 1))
-        );
+    );
 
 }
