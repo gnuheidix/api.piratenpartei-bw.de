@@ -125,6 +125,11 @@ class WikiController extends AppController{
         $this->set('content', $content);
     }
     
+    /**
+     * Delivers a page of another website.
+     * The extracted content will be delivered within a bare HTML
+     * page.
+     */
     public function getpagehtml(){
         $this->getpage();
         $this->layout = 'barebone';
@@ -149,7 +154,7 @@ class WikiController extends AppController{
      * @param Object $paramsObject The object "params" of the client request.
      *     (usually $this->params)
      * @return array The extracted title and elementId or false if something
-     *     bad happended.
+     *     bad happened.
      */
     protected function parseGetParamsWithId($paramsObject){
         $retval = false;
@@ -187,7 +192,7 @@ class WikiController extends AppController{
      * http://url.tld/CONTROLLER/ACTION/TITLE_WITH_SLASHES
      * @param Object $paramsObject The object "params" of the client request.
      *     (usually $this->params)
-     * @return title The extracted page title false if something bad happended.
+     * @return string The extracted page title and false if sth. bad happened.
      */
     protected function parseGetParams($paramsObject){
         $retval = false;

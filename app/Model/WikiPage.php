@@ -14,13 +14,7 @@ class WikiPage extends AppModel {
         )
     );
     
-    /**
-     * The URL of the wiki. Just the name of the page has to be added
-     * for proper retrival.
-     */
-    protected $wikiBaseUrl = 'http://wiki.piratenpartei.de/wiki//index.php?action=render&title=';
-    
-    // TODO validation needed
+    // TODO model validation needed
     
     /**
      * Retrieves a certain WikiPage from model / external source
@@ -49,7 +43,7 @@ class WikiPage extends AppModel {
      */
     public function updateWikiPage($title){
         // request page from wiki
-        $content = @file_get_contents($this->wikiBaseUrl . $title);
+        $content = $this->retrievePageContent($title);
         $retval = false;
         if($content !== FALSE){
             
@@ -76,6 +70,20 @@ class WikiPage extends AppModel {
             $retval = $data;
         }
         return $retval;
+    }
+    
+    /**
+     * Retrieves the HTML from the configured data source. This method can be
+     * overwritten in a test case in order to test the model.
+     * @param string $title The title of the page to retrieve.
+     * @return string The HTMl retrieved from the datasource or false if sth.
+     *     bad happened.
+     */
+    protected function retrievePageContent($title){
+        $baseUrl = Configure::read('WikiPage.basepageurl');
+        
+        // @ deactivates warnings caused by HTTP404 or other filing stuff
+        return @file_get_contents($baseUrl.$title);
     }
 }
 ?>
