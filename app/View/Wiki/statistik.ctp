@@ -9,11 +9,13 @@
 if(!empty($wiki_pages)){
     echo '<ul>';
     foreach($wiki_pages as $wikiPage){
-        echo '<li><a href="'.$baseurl.'getpagehtml/'.$wikiPage['WikiPage']['title'].'">'.$wikiPage['WikiPage']['title']."</a>";
+        echo '<li><a 
+href="'.$baseurl.'wiki/getpagehtml/'.$wikiPage['WikiPage']['title'].'">'.$wikiPage['WikiPage']['title']."</a>";
         if(!empty($wikiPage['WikiElement'])){
             echo "<ul>";
             foreach($wikiPage['WikiElement'] as $wikiElement){
-                echo '<li><a href="'.$baseurl.'gethtml/'.$wikiPage['WikiPage']['title'].'/'.$wikiElement['element_id'].'">'.$wikiElement['element_id'].'</a></li>';
+                echo '<li><a 
+href="'.$baseurl.'wiki/gethtml/'.$wikiPage['WikiPage']['title'].'/'.$wikiElement['element_id'].'">'.$wikiElement['element_id'].'</a></li>';
             }
             echo "</ul>";
         }
