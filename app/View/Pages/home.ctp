@@ -19,8 +19,8 @@
 <p>Diese Webapplikation stellt maschinenauslesbare Informationen rund um die Piratenpartei zur Verfügung. Als Datenquelle dient das <a href="http://wiki.piratenpartei.de">Piratenwiki</a>.</p>
 <p>Die folgenden Hauptfunktionen werden zur Zeit angeboten.</p>
 <dl>
-    <dt><a href="/wiki">wiki</a></dt>
+    <dt><a href="wiki">wiki</a></dt>
     <dd>bietet komfortablen Zugriff auf Inhalte</dd>
-    <dt><a href="/stammtisch">stammtisch</a></dt>
+    <dt><a href="stammtisch">stammtisch</a></dt>
     <dd>stellt Informationen der Stammtische dar</dd>
 </dl>
