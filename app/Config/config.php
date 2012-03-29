@@ -4,6 +4,14 @@
  * The URL of the wiki. Just the name of the page has to be added
  * for proper retrival.
  */
+$config['System'] = array(
+    'baseurl' => '/'
+);
+
+/**
+ * The URL of the wiki. Just the name of the page has to be added
+ * for proper retrival.
+ */
 $config['WikiPage'] = array(
     'basepageurl' => 'http://wiki.piratenpartei.de/wiki//index.php?action=render&title='
 );
