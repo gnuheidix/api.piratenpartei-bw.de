@@ -26,6 +26,7 @@ class WikiElement extends AppModel {
      * @return array The retrieved WikiElement or false if sth. went wrong.
      */
     public function getElement($pageTitle, $elementId){
+        $elementId = urldecode($elementId);
         $wikiPageObj = new WikiPage();
         $wikiPage = $wikiPageObj->getPage($pageTitle);
         $wikiElement = false;

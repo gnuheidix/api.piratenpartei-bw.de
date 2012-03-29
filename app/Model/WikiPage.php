@@ -28,6 +28,7 @@ class WikiPage extends AppModel {
      * @return array the resultset
      */
     public function getPage($title){
+        $title = urldecode($title);
         $wikipage = $this->findByTitle($title);
         
         if(!empty($wikipage['WikiPage']['id'])){
