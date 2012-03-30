@@ -24,13 +24,16 @@ class WikiPage extends AppModel {
     public function getPage($title){
         $title = urldecode($title);
         $wikipage = $this->findByTitle($title);
+        $maxage = Configure::read('System.autoupdateage');
         
-        if(!empty($wikipage['WikiPage']['id'])){
-            // update access time
+        if(   empty($wikipage['WikiPage']['id'])
+           || (time() - strtotime($wikipage['WikiPage']['updatedat']) > $maxage)){
+            // cache miss or outdated
+            $wikipage = $this->updateWikiPage($title);
+        }else{
+            // cache hit - just update access time
             $this->id = $wikipage['WikiPage']['id'];
             $this->saveField('requested', date('Y-m-d H:i:s', time()));
-        }else{
-            $wikipage = $this->updateWikiPage($title);
         }
         return $wikipage;
     }
@@ -61,8 +64,7 @@ class WikiPage extends AppModel {
             $data = $this->findByTitle($title);
             $data['WikiPage']['title'] = $title;
             $data['WikiPage']['content'] = $content;
-            $updateAgainAt = time() + 3600; // now + 1h
-            $data['WikiPage']['updated'] = date('Y-m-d H:i:s',$updateAgainAt);
+            $data['WikiPage']['updatedat'] = date('Y-m-d H:i:s', time());
             $data['WikiPage']['requested'] = date('Y-m-d H:i:s',time());
             $this->save($data);
             $data['WikiPage']['id'] = $this->id;
@@ -82,7 +84,13 @@ class WikiPage extends AppModel {
     protected function retrievePageContent($title){
         $baseUrl = Configure::read('WikiPage.basepageurl');
         
-        // @ deactivates warnings caused by HTTP404 or other filing stuff
+        $context = stream_context_create(array(
+            'http' => array(
+                'timeout' => Configure::read('WikiPage.requesttimeout')
+            )
+        ));
+        
+        // @ deactivates warnings caused by HTTP404 or other failing stuff
         return @file_get_contents($baseUrl.$title);
     }
 }

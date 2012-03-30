@@ -28,7 +28,7 @@ class WikiPagesSchema extends CakeSchema {
             'title' => array('type'=>'string', 'null' => false, 'length' => 255, 'key' => 'index'),
             'content' => array('type'=>'text', 'null' => true, 'default' => NULL),
             'requested' => array('type'=>'datetime', 'null' => false),
-            'updated' => array('type'=>'datetime', 'null' => false),
+            'updatedat' => array('type'=>'datetime', 'null' => false),
             'created' => array('type'=>'datetime', 'null' => false),
             'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'title' => array('column' => 'title', 'unique' => 1))
     );

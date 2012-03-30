@@ -1,19 +1,31 @@
 <?php
 
 /**
- * The URL of the wiki. Just the name of the page has to be added
- * for proper retrival.
+ * Determines where this application is located
+ * http://DOMAIN.TLD<baseurl>
  */
 $config['System'] = array(
     'baseurl' => '/'
+    /**
+     * Age of a model in seconds before it gets automatically updated
+     * during the request
+     */
+    ,'autoupdateage' => 7200
+    /*
+    ,'cronupdateage' => 3600
+    */
 );
 
-/**
- * The URL of the wiki. Just the name of the page has to be added
- * for proper retrival.
- */
 $config['WikiPage'] = array(
+    /**
+     * The URL of the wiki. Just the name of the page has to be added
+     * for proper retrival.
+     */
     'basepageurl' => 'http://wiki.piratenpartei.de/wiki//index.php?action=render&title='
+    /**
+     * Time in seconds allowed for one request using file_get_contents
+     */
+    ,'requesttimeout' => 5
 );
 
 $config['Stammtisch'] = array(
