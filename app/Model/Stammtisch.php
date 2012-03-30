@@ -7,10 +7,11 @@ class Stammtisch extends AppModel{
     public $useTable = false;
     
     /**
-     * Updates all Stammtisch locations into data.js within webroot
+     * Updates all Stammtisch locations into a file
      */
     public function updateStammtische(){
-        // Init
+        // Init from configuration
+        $maxage = Configure::read('System.autoupdateage');
         $pageTitle = Configure::read('Stammtisch.sourcepagetitle');
         $cols = Configure::read('Stammtisch.cols');
         $colSep = Configure::read('Stammtisch.colsep');
@@ -21,11 +22,18 @@ class Stammtisch extends AppModel{
         $parsedData = array();
         $sepLen = strlen($colSep);
         
+        // retrieve content from WikiPage
         $wikiPageObj = new WikiPage();
-        
         $wikiPage = $wikiPageObj->getPage($pageTitle);
         if(!empty($wikiPage)){
-            $html = $wikiPage['WikiPage']['content'];
+            // check age of generated file
+            if(time() - filemtime($destination) > $maxage){
+                // update generated file
+                $html = $wikiPage['WikiPage']['content'];
+            }else{
+                // stop now, the file is young enough
+                return;
+            }
         }
         
         // Tabelle zeilenweise durchgehen
@@ -71,13 +79,8 @@ class Stammtisch extends AppModel{
                 fwrite($file, "var stammtische = eval(".json_encode($parsedData).");");
                 fclose($file);
             }else{
-                trigger_error("\n\nDie aus dem Wiki gewonnen Daten konnten nicht nach "
-                        .$destination." geschrieben werden :-("
-                        , E_USER_NOTICE
-                );
+                trigger_error($destination." ohne Schreibrechte :-(", E_USER_NOTICE);
             }
-        }else{
-            trigger_error("\n\nDer Wiki-Ausleseprozess lieferte keine Daten :-(", E_USER_NOTICE);
         }
     }
 }
