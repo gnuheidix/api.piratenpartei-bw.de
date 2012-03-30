@@ -50,7 +50,7 @@ class WikiPage extends AppModel {
         $retval = false;
         if($content !== FALSE){
             
-            $content = str_replace( // TODO check if it's clever to do here
+            $content = str_replace(
                     'src="/wiki/images/'
                     , 'src="http://wiki.piratenpartei.de/wiki/images/'
                     , $content
@@ -70,6 +70,9 @@ class WikiPage extends AppModel {
             $data['WikiPage']['id'] = $this->id;
             
             $retval = $data;
+        }else{
+            // the external source seems to be down, retrieve from database
+            $retval = $this->findByTitle($title);
         }
         return $retval;
     }
