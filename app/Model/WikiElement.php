@@ -27,6 +27,7 @@ class WikiElement extends AppModel {
      */
     public function getElement($pageTitle, $elementId){
         $elementId = urldecode($elementId);
+        $maxage = Configure::read('System.autoupdateage');
         $wikiPageObj = new WikiPage();
         $wikiPage = $wikiPageObj->getPage($pageTitle);
         $wikiElement = false;
@@ -35,12 +36,13 @@ class WikiElement extends AppModel {
             $pageId = $wikiPage['WikiPage']['id'];
             $wikiElement = $this->findByPageIdAndElementId($pageId, $elementId);
             
-            if(!empty($wikiElement['WikiElement']['id'])){
+            if(   empty($wikiElement['WikiElement']['id'])
+               || (time() - strtotime($wikiElement['WikiElement']['updatedat']) > $maxage)){
+                $wikiElement = $this->updateWikiElement($wikiPage, $elementId);
+            }else{
                 // update access time
                 $this->id = $wikiElement['WikiElement']['id'];
                 $this->saveField('requested', date('Y-m-d H:i:s', time()));
-            }else{
-                $wikiElement = $this->updateWikiElement($wikiPage, $elementId);
             }
         }
         return $wikiElement;
@@ -66,6 +68,7 @@ class WikiElement extends AppModel {
             $data['WikiElement']['page_id'] = $pageId;
             $data['WikiElement']['element_id'] = $elementId;
             $data['WikiElement']['content'] = $content;
+            $data['WikiElement']['updatedat'] =  date('Y-m-d H:i:s', time());
             $data['WikiElement']['requested'] =  date('Y-m-d H:i:s', time());
             $this->save($data);
             $data['WikiElement']['id'] = $this->id;
