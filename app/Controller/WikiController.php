@@ -61,7 +61,7 @@ class WikiController extends AppController{
         $elementCount = $this->WikiElement->find('count');
         $wikiPages = $this->WikiPage->find('all'
             , array('recursive' => 1
-                    ,'fields' => array('WikiPage.title')
+                    ,'fields' => array('WikiPage.title', 'WikiPage.updatedat', 'WikiPage.requested')
             )
         );
         
