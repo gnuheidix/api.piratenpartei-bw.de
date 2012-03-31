@@ -31,4 +31,25 @@ App::uses('Model', 'Model');
  * @package       app.Model
  */
 class AppModel extends Model {
+    
+    /**
+     * Start Lock - All other processes trying to lock, will wait
+     * for at least seven seconds.
+     * see: http://dev.mysql.com/doc/refman/5.1/de/miscellaneous-functions.html
+     * @param string $name The name of the lock to aquire.
+     * @return 0 if the lock couldn't be aquired, 1 otherwise.
+     */
+    public function lock($name = 'SPERRE'){
+        $result = $this->query('SELECT GET_LOCK ("'.$name.'", 7)');
+        return  $result[0][0][key($result[0][0])];
+    }
+    
+    /**
+     * Releases the lock so that other processes can aquire it.
+     * @param string $name The name of the lock to release.
+     */
+    public function unlock($name = 'SPERRE'){
+        $dbo = $this->getDataSource();
+        $dbo->execute('SELECT RELEASE_LOCK("'.$name.'")');
+    }
 }

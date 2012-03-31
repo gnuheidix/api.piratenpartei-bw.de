@@ -10,7 +10,7 @@ $config['System'] = array(
      * Age of a model in seconds before it gets automatically updated
      * during the request
      */
-    ,'autoupdateage' => 3//7200
+    ,'autoupdateage' => 7200
     /*
     ,'cronupdateage' => 3600
     */
