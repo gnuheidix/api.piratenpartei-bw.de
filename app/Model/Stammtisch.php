@@ -26,8 +26,12 @@ class Stammtisch extends AppModel{
         $wikiPageObj = new WikiPage();
         $wikiPage = $wikiPageObj->getPage($pageTitle);
         if(!empty($wikiPage)){
-            // check age of generated file
-            if(time() - filemtime($destination) > $maxage){
+            // check age and length of generated file
+            if(   is_writable($destination)
+               && (time() - filemtime($destination) > $maxage
+                   || filesize($destination) === 0
+                  )
+              ){
                 // update generated file
                 $html = $wikiPage['WikiPage']['content'];
             }else{

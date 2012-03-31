@@ -68,7 +68,7 @@ class WikiElement extends AppModel {
             $data['WikiElement']['page_id'] = $pageId;
             $data['WikiElement']['element_id'] = $elementId;
             $data['WikiElement']['content'] = $content;
-            $data['WikiElement']['updatedat'] =  date('Y-m-d H:i:s', time());
+            $data['WikiElement']['updatedat'] =  $wikiPage['WikiPage']['updatedat'];
             $data['WikiElement']['requested'] =  date('Y-m-d H:i:s', time());
             $this->save($data);
             $data['WikiElement']['id'] = $this->id;
