@@ -12,3 +12,4 @@ tags
 .project
 .settings/
 /app/webroot/js/stammtisch/data.js
+/app/webroot/img/wikiimage

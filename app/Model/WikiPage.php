@@ -3,7 +3,7 @@ class WikiPage extends AppModel {
     public $name = 'WikiPage';
     
     /**
-     * incoming link from WikiElement
+     * incoming link from WikiElement and WikiImage
      * @var array
      */
     public $hasMany = array(
@@ -11,6 +11,11 @@ class WikiPage extends AppModel {
             'className'     => 'WikiElement',
             'foreignKey'    => 'page_id',
             'dependent'     => true // delete if the WikiPage gets deleted
+        )
+        ,'WikiImage' => array(
+                'className'     => 'WikiImage',
+                'foreignKey'    => 'page_id',
+                'dependent'     => true // delete if the WikiPage gets deleted
         )
     );
     
@@ -50,10 +55,11 @@ class WikiPage extends AppModel {
         $retval = false;
         if($content !== FALSE){
             
+            // replace all relative source links
             $content = str_replace(
-                    'src="/wiki/images/'
-                    , 'src="http://wiki.piratenpartei.de/wiki/images/'
-                    , $content
+                'src="/'
+                , 'src="'.Configure::read('WikiPage.baseimageurl')
+                , $content
             );
             
             // remove comments
@@ -66,10 +72,15 @@ class WikiPage extends AppModel {
             $data['WikiPage']['content'] = $content;
             $data['WikiPage']['updatedat'] = date('Y-m-d H:i:s', time());
             $data['WikiPage']['requested'] = date('Y-m-d H:i:s',time());
-            $this->save($data);
-            $data['WikiPage']['id'] = $this->id;
-            
-            $retval = $data;
+            if($this->save($data)){
+                $data['WikiPage']['id'] = $this->id;
+                if(Configure::read('WikiImage.enabled')){
+                    App::import('Model', 'WikiImage');
+                    $wikiImageObj = new WikiImage();
+                    $data = $wikiImageObj->replaceImages($data);
+                }
+                $retval = $data;
+            }
         }else{
             // the external source seems to be down, retrieve from database
             $retval = $this->findByTitle($title);
@@ -81,7 +92,7 @@ class WikiPage extends AppModel {
      * Retrieves the HTML from the configured data source. This method can be
      * overwritten in a test case in order to test the model.
      * @param string $title The title of the page to retrieve.
-     * @return string The HTMl retrieved from the datasource or false if sth.
+     * @return string The HTML retrieved from the datasource or false if sth.
      *     bad happened.
      */
     protected function retrievePageContent($title){

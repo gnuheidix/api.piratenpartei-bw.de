@@ -27,8 +27,9 @@ class WikiImagesSchema extends CakeSchema {
             'id' => array('type'=>'integer', 'null' => false, 'length' => 10, 'key' => 'primary'),
             'source_url' => array('type'=>'string', 'null' => false, 'length' => 511, 'key' => 'index'),
             'image_file' => array('type'=>'string', 'null' => false, 'length' => 255, 'key' => 'index'),
+            'page_id' => array('type'=>'integer', 'null' => false, 'length' => 10, 'key' => 'index'),
             'created' => array('type'=>'datetime', 'null' => false),
-            'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'source_url' => array('column' => 'source_url'), 'image_file' => array('column' => 'image_file'))
+            'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'source_url' => array('column' => 'source_url'), 'image_file' => array('column' => 'image_file'), 'page_id' => array('column' => 'page_id'))
     );
 
 }

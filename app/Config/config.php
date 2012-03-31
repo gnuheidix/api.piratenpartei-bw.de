@@ -10,7 +10,7 @@ $config['System'] = array(
      * Age of a model in seconds before it gets automatically updated
      * during the request
      */
-    ,'autoupdateage' => 7200
+    ,'autoupdateage' => 3//7200
     /*
     ,'cronupdateage' => 3600
     */
@@ -18,14 +18,29 @@ $config['System'] = array(
 
 $config['WikiPage'] = array(
     /**
-     * The URL of the wiki. Just the name of the page has to be added
-     * for proper retrival.
+     * The URL of the wiki where just the name of a page has to be added
+     * for its proper retrival.
      */
     'basepageurl' => 'http://wiki.piratenpartei.de/wiki//index.php?action=render&title='
     /**
-     * Time in seconds allowed for one request using file_get_contents
+     * Time in seconds allowed for one request using file_get_contents.
      */
     ,'requesttimeout' => 5
+    /**
+     * The URL of the wiki where all relative links can be appended to.
+     */
+    ,'baseimageurl' => 'http://wiki.piratenpartei.de/'
+);
+
+$config['WikiImage'] = array(
+        /**
+         * The directory where to store cached images. (relative to webroot)
+         */
+        'basepath' => '/img/wikiimage/'
+        /**
+         * Determines whether local image caching is active or not.
+         */
+        ,'enabled' => true
 );
 
 $config['Stammtisch'] = array(
