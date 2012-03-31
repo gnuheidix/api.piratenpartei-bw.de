@@ -26,13 +26,14 @@ class WikiImage extends AppModel {
     public function replaceImages($data){
         // init Wikiimage model and DOMDocument
         $wikiImageObj = new WikiImage();
-        $dom = new DOMDocument();
-        $dom->loadHTML($data['WikiPage']['content']);
+        $dom = new DOMDocument('1.0', 'utf-8');
+        $dom->loadHTML(utf8_decode($data['WikiPage']['content']));
         $xpath = new DOMXPath($dom);
         
-        $this->deleteAll(array('page_id' => $data['WikiPage']['id']));
+        // Drop all WikiImages for the WikiPage whose content shall be replaced.
+        $this->deleteWithPage($data['WikiPage']['id']);
         
-        // iterate over all images
+        // iterate over all embedded images
         $images = $xpath->query('//img');
         foreach($images as $image){
             // extract information for WikiImage model
@@ -42,7 +43,7 @@ class WikiImage extends AppModel {
             $dataset['WikiImage']['image_file'] = String::uuid().'.'.$imageExtension;
             $dataset['WikiImage']['page_id'] = $data['WikiPage']['id'];
             
-            // save to WikiImage
+            // save to WikiImage and replace content in DOM
             $this->create();
             if($this->save($dataset)){
                 $imageDir = Configure::read('WikiImage.basepath');
@@ -50,9 +51,26 @@ class WikiImage extends AppModel {
             }
         }
         
-        // save to WikiPage
-        pr($dom->saveHTML());
-        exit;
+        // write modified DOM to new DOMDocument
+        $children = $dom->documentElement->firstChild->childNodes;
+        $newDoc = new DOMDocument('1.0', 'utf-8');
+        foreach($children as $child){
+            $newDoc->appendChild($newDoc->importNode($child, true));
+        }
+        $newContent = $newDoc->saveHTML();
+        $newContent = str_replace('<br>', '<br/>', $newContent);
+        $newContent = trim($newContent);
+        // write replaced content to WikiPage model
+        
+        if(!empty($newContent)){
+            $wikiPageObj = new WikiPage();
+            $wikiPageObj->id = $data['WikiPage']['id'];
+            if($wikiPageObj->saveField('content', $newContent)){
+                $data['WikiPage']['content'] = $newContent;
+            }
+        }
+        
+        return $data;
     }
     
     /**
@@ -77,22 +95,27 @@ class WikiImage extends AppModel {
     }
     
     /**
-     * Each delete deletes the dependent file either.
-     * @see Model::delete()
+     * Deletes all dependent WikiImages of a WikiPage.
      */
-    public function delete($id = null, $cascade = true){
-        $retval = false;
-        $wikiImage = $this->findById($id);
-        if(!empty($wikiImage['WikiImage']['image_file'])){
-            $imageFile =
-                APP
-                .WEBROOT_DIR
-                .Configure::read('WikiImage.basepath')
-                .$wikiImage['image_file']
-            ;
-            $retval = parent::delete($id) && unlink($imageFile);
+    protected function deleteWithPage($pageID){
+        // iterate over all WikiImages of a certain WikiPage
+        $wikiImages = $this->findAllByPageId($pageID);
+        foreach($wikiImages as $wikiImage){
+            if(!empty($wikiImage['WikiImage']['image_file'])){
+                $imageFile =
+                    APP
+                    .WEBROOT_DIR
+                    .Configure::read('WikiImage.basepath')
+                    .$wikiImage['WikiImage']['image_file']
+                ;
+                
+                // delete and unlink
+                if(is_file($imageFile)){
+                    unlink($imageFile);
+                }
+                parent::delete($wikiImage['WikiImage']['id']);
+            }
         }
-        return $retval;
     }
 }
 ?>

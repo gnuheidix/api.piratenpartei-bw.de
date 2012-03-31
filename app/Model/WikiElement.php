@@ -105,7 +105,7 @@ class WikiElement extends AppModel {
         }
         
         $retval = str_replace('<br>', '<br/>', $retval);
-        $retval = trim ($retval);
+        $retval = trim($retval);
         return $retval;
     }
 }

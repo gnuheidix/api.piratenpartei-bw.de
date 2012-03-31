@@ -77,7 +77,16 @@ class WikiPage extends AppModel {
                 if(Configure::read('WikiImage.enabled')){
                     App::import('Model', 'WikiImage');
                     $wikiImageObj = new WikiImage();
-                    $data = $wikiImageObj->replaceImages($data);
+                    
+                    // Start transaction for this page title - otherwise other
+                    // threads could execute the same code and create a mess
+                    // in the file system. (orphan image files)
+                    // If we fail, uncached images with working image links
+                    // will be delivered.
+                    if($this->lock(md5($title))){
+                        $data = $wikiImageObj->replaceImages($data);
+                        $this->unlock();
+                    }
                 }
                 $retval = $data;
             }
