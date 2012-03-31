@@ -56,9 +56,9 @@ $config['Stammtisch'] = array(
     /**
      * Several parser parameters used by StammtischModel
      */
-    ,'rowbegin' => "<tr><td>"
-    ,'rowend' => "</td></tr>"
-    ,'colsep' => "</td><td>"
+    ,'rowbegin' => "<tr>\n<td>"
+    ,'rowend' => "</td>\n</tr>"
+    ,'colsep' => "</td>\n<td>"
     ,'cols' => array(
         'Link'
         , 'Typ'
