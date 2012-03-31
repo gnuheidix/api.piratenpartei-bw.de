@@ -1,16 +1,28 @@
 <?php
 
+// WikiPage is the data source of this model.
 APP::import('Model', 'WikiPage');
+
+/**
+ * Parses a certain WikiPage of a special format and renders its
+ * content into a JavaScript file.
+ * @author gnuheidix
+ */
 class Stammtisch extends AppModel{
     public $name = 'Stammtisch';
     
+    /**
+     * The model doesn't need own tables.
+     * @var string
+     */
     public $useTable = false;
     
     /**
-     * Updates all Stammtisch locations into a file
+     * Updates all Stammtisch locations into a file in case the
+     * current data in that file is old enough.
      */
     public function updateStammtische(){
-        // Init from configuration
+        // initialize from configuration
         $maxage = Configure::read('System.autoupdateage');
         $pageTitle = Configure::read('Stammtisch.sourcepagetitle');
         $cols = Configure::read('Stammtisch.cols');
@@ -40,7 +52,7 @@ class Stammtisch extends AppModel{
             }
         }
         
-        // Tabelle zeilenweise durchgehen
+        // parse the HTML table
         while($html !== FALSE){
             $beginBlock = strpos($html, $rowBegin);
             $endBlock = strpos($html, $rowEnd);
@@ -48,7 +60,7 @@ class Stammtisch extends AppModel{
                     && $endBlock !== FALSE
                     && $beginBlock < $endBlock){
                 
-                // Zeile extrahieren
+                // find dataset
                 $block = $colSep;
                 $block .= substr($html
                         , $beginBlock + strlen($rowBegin)
@@ -57,7 +69,7 @@ class Stammtisch extends AppModel{
                 if(substr_count($block, $colSep) === count($cols)){
                     $blockData = array();
                     
-                    // Daten extrahieren
+                    // extract dataset
                     foreach($cols as $col){
                         $endPos = strpos($block, $colSep, $sepLen);
                         $data = substr($block
@@ -76,7 +88,7 @@ class Stammtisch extends AppModel{
                 $html = FALSE;
             }
         }
-        // Daten schreiben, wenn vorhanden
+        // write data to file if possible
         if(!empty($parsedData)){
             $file = fopen($destination, 'w');
             if($file !== FALSE){
