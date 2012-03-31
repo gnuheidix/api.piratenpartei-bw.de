@@ -56,7 +56,7 @@ $config['Stammtisch'] = array(
     /**
      * Several parser parameters used by StammtischModel
      */
-    ,'rowbegin' => "<tr>\n<td>"
+    ,'rowbegin' => "<tr><td>"
     ,'rowend' => "</td></tr>"
     ,'colsep' => "</td><td>"
     ,'cols' => array(
