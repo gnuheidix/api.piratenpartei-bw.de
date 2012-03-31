@@ -1,0 +1,3 @@
+# disable script execution
+Options Indexes
+php_flag engine off
