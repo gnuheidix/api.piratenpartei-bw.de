@@ -11,4 +11,4 @@ tags
 .buildpath
 .project
 .settings/
-
+/app/webroot/js/stammtisch/data.js
