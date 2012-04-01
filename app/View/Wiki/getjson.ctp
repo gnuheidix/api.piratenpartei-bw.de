@@ -1,0 +1,1 @@
+<?php echo 'var '.$element_id.' = '.json_encode($content).';' ?>

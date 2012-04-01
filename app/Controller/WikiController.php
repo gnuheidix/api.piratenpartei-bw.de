@@ -49,7 +49,8 @@ class WikiController extends AppController{
     /**
      * Displays a static manual page
      */
-    public function index() {
+    public function index(){
+        $this->layout = 'default-trans';
         // see /app/View/Wiki/index.ctp
     }
     
@@ -68,6 +69,38 @@ class WikiController extends AppController{
         $this->set('page_count', $pageCount);
         $this->set('element_count', $elementCount);
         $this->set('wiki_pages', $wikiPages);
+    }
+    
+    /**
+     * Delivers a page element extracted from another website.
+     * The extracted content will be delivered without the bloaty
+     * HTML stuff around it.
+     */
+    public function getpagejson(){
+        $this->layout = 'ajax';
+        $this->view = 'getjson';
+        $content = ':(';
+    
+        $params = $this->parseGetParamsWithId($this->params);
+        if(!empty($params)){
+            extract($params);
+    
+            // lookup the WikiPage or fetch it
+            $wikiPage = $this->WikiPage->getPage($title);
+            if(!empty($wikiPage)){
+                // prepare the WikiElement for being delivered
+                $content = $wikiPage['WikiPage']['content'];
+            }else{
+                $content .= ' Das Element mit der ID "'
+                .$elementId
+                .'" wurde innerhalb der Wikiseite nicht gefunden.'
+                ;
+            }
+        }else{
+            $content = 'Der Aufruf schlug aufgrund fehlerhafter Eingaben fehl.';
+        }
+        $this->set('element_id', $elementId);
+        $this->set('content', $content);
     }
     
     /**
