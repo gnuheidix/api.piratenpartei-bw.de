@@ -1,0 +1,4 @@
+# disable script execution
+Options None
+Options +FollowSymLinks
+php_flag engine off
