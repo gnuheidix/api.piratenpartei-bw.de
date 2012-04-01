@@ -33,3 +33,12 @@
 <ul>
     <li><a href="<?php echo $baseurl; ?>wiki/getpage/Kreisverband_Konstanz/Termine">/wiki/getpage/Kreisverband_Konstanz/Termine</a></li>
 </ul>
+<h3>getpagejson</h3>
+<p>Diese Funktion ist vorzugsweise durch JavaScript-JSONP einzusetzen.</p>
+<h4>Beispielcode</h4>
+<pre>
+&lt;script type="javascript" src="http://<?php echo $_SERVER['SERVER_NAME'].$baseurl; ?>wiki/getpagejson/Kreisverband_Konstanz/Termine/JSONP1"&gt;&lt;/script&gt;
+&lt;input type="button" onclick="alert(JSONP1);" value="Inhalt anzeigen" /&gt;
+</pre>
+<script type="javascript" src="<?php echo $baseurl; ?>wiki/getpagejson/Kreisverband_Konstanz/Termine/JSONP1"></script>
+<input type="button" onclick="alert(JSONP1);" value="Inhalt anzeigen" />

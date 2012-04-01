@@ -321,10 +321,7 @@ label {
 }
 input, textarea {
 	clear: both;
-	font-size: 140%;
 	font-family: sans-serif;
-	padding: 1%;
-	width:98%;
 }
 select {
 	clear: both;
