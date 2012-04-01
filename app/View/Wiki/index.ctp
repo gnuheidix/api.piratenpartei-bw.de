@@ -37,8 +37,8 @@
 <p>Diese Funktion ist vorzugsweise durch JavaScript-JSONP einzusetzen.</p>
 <h4>Beispielcode</h4>
 <pre>
-&lt;script type="javascript" src="http://<?php echo $_SERVER['SERVER_NAME'].$baseurl; ?>wiki/getpagejson/Kreisverband_Konstanz/Termine/JSONP1"&gt;&lt;/script&gt;
-&lt;input type="button" onclick="alert(JSONP1);" value="Inhalt anzeigen" /&gt;
+&lt;script type="text/javascript" src="http://<?php echo $_SERVER['SERVER_NAME'].$baseurl; ?>wiki/getpagejson/Kreisverband_Konstanz/Termine/jsonp"&gt;&lt;/script&gt;
+&lt;input type="button" onclick="alert(jsonp);"/&gt;
 </pre>
-<script type="javascript" src="<?php echo $baseurl; ?>wiki/getpagejson/Kreisverband_Konstanz/Termine/JSONP1"></script>
-<input type="button" onclick="alert(JSONP1);" value="Inhalt anzeigen" />
+<script type="text/javascript" src="<?php echo $baseurl; ?>wiki/getpagejson/Kreisverband_Konstanz/Termine/jsonp"></script>
+<input type="button" onclick="alert(jsonp);" value="Inhalt anzeigen" />
