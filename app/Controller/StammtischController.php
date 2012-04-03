@@ -49,7 +49,8 @@ class StammtischController extends AppController{
     /**
      * Displays a static manual page
      */
-    public function index() {
+    public function index(){
+        $this->layout = 'default-trans';
         // see /app/View/Stammtisch/index.ctp
     }
     

@@ -24,8 +24,7 @@ class WikiImage extends AppModel {
      * @return The updated WikiPage dataset with replaced images where possible.
      */
     public function replaceImages($data){
-        // init Wikiimage model and DOMDocument
-        $wikiImageObj = new WikiImage();
+        // init DOMDocument
         $dom = new DOMDocument('1.0', 'utf-8');
         $dom->loadHTML(utf8_decode($data['WikiPage']['content']));
         $xpath = new DOMXPath($dom);
