@@ -54,8 +54,6 @@ class Stammtisch extends AppModel{
               ){
                 // drop all \n and \r in order to avoid parser errors
                 $html = $wikiPage['WikiPage']['content'];
-                $html = str_replace("\n", '', $html);
-                $html = str_replace("\r", '', $html);
             }else{
                 // stop now, the file is young enough
                 return;
