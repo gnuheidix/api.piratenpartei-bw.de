@@ -1,4 +1,12 @@
-<?php
+<?php //CPYRGHT
+/**
+ * api.piratenpartei-bw.de
+ * 
+ * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * @author  Thomas Heidrich, Adrian Kummerländer
+ * @copyright Copyright (c) 2012 Thomas Heidrich and other authors
+ */
+?><?php
 /*i18n schema generated on: 2007-11-25 07:11:25 : 1196004805*/
 
 /**

@@ -1,4 +1,12 @@
-<p>Diese Hauptfunktion dient hauptsächlich dazu, um Inhalte des Piratenwikis zu extrahieren. Sämtliche Inhalte werden auch bei einem Ausfall des Piratenwikis zur Verfügung stehen und regelmäßig aktualisiert.</p>
+<?php //CPYRGHT
+/**
+ * api.piratenpartei-bw.de
+ * 
+ * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * @author  Thomas Heidrich
+ * @copyright Copyright (c) 2012 Thomas Heidrich and other authors
+ */
+?><p>Diese Hauptfunktion dient hauptsächlich dazu, um Inhalte des Piratenwikis zu extrahieren. Sämtliche Inhalte werden auch bei einem Ausfall des Piratenwikis zur Verfügung stehen und regelmäßig aktualisiert.</p>
 <ul>
     <li><a href="<?php echo $baseurl; ?>wiki/statistik">Statistik</a></li>
 </ul>

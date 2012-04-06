@@ -1,3 +1,10 @@
+/**
+ * api.piratenpartei-bw.de
+ * 
+ * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * @author  Thomas Heidrich, Adrian Kummerländer
+ * @copyright Copyright (c) 2012 Thomas Heidrich and other authors
+ */
 var BaWueCoordinates = [
 new L.LatLng(49.7763400000001,9.65046000000007),
 new L.LatLng(49.7651520000001,9.65096800000015),

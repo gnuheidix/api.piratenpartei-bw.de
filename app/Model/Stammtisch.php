@@ -1,4 +1,12 @@
-<?php
+<?php //CPYRGHT
+/**
+ * api.piratenpartei-bw.de
+ * 
+ * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * @author  Thomas Heidrich, Adrian Kummerländer
+ * @copyright Copyright (c) 2012 Thomas Heidrich and other authors
+ */
+?><?php
 
 // WikiPage is the data source of this model.
 APP::import('Model', 'WikiPage');
@@ -44,8 +52,10 @@ class Stammtisch extends AppModel{
                    || filesize($destination) === 0
                   )
               ){
-                // update generated file
+                // drop all \n and \r in order to avoid parser errors
                 $html = $wikiPage['WikiPage']['content'];
+                $html = str_replace("\n", '', $html);
+                $html = str_replace("\r", '', $html);
             }else{
                 // stop now, the file is young enough
                 return;
@@ -88,6 +98,7 @@ class Stammtisch extends AppModel{
                 $html = FALSE;
             }
         }
+        
         // write data to file if possible
         if(!empty($parsedData)){
             $file = fopen($destination, 'w');
