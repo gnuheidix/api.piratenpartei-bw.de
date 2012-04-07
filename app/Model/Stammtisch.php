@@ -34,13 +34,16 @@ class Stammtisch extends AppModel{
         $maxage = Configure::read('System.autoupdateage');
         $pageTitle = Configure::read('Stammtisch.sourcepagetitle');
         $cols = Configure::read('Stammtisch.cols');
-        $colSep = Configure::read('Stammtisch.colsep');
-        $rowBegin = Configure::read('Stammtisch.rowbegin');
-        $rowEnd = Configure::read('Stammtisch.rowend');
+        $colSepSource = Configure::read('Stammtisch.colsepSource');
+        $colSepDestination = Configure::read('Stammtisch.colsepDestination');
+        $rowBeginSource = Configure::read('Stammtisch.rowbeginSource');
+        $rowBeginDestination = Configure::read('Stammtisch.rowbeginDestination');
+        $rowEndSource = Configure::read('Stammtisch.rowendSource');
+        $rowEndDestination = Configure::read('Stammtisch.rowendDestination');
         $destination = Configure::read('Stammtisch.destination');
         
         $parsedData = array();
-        $sepLen = strlen($colSep);
+        $sepLen = strlen($colSepDestination);
         
         // retrieve content from WikiPage
         $wikiPageObj = new WikiPage();
@@ -60,26 +63,31 @@ class Stammtisch extends AppModel{
             }
         }
         
+        // cleanup indicators
+        $html = preg_replace($rowBeginSource, $rowBeginDestination, $html);
+        $html = preg_replace($rowEndSource, $rowEndDestination, $html);
+        $html = preg_replace($colSepSource, $colSepDestination, $html);
+        
         // parse the HTML table
         while($html !== FALSE){
-            $beginBlock = strpos($html, $rowBegin);
-            $endBlock = strpos($html, $rowEnd);
+            $beginBlock = strpos($html, $rowBeginDestination);
+            $endBlock = strpos($html, $rowEndDestination);
             if(   $beginBlock !== FALSE
                     && $endBlock !== FALSE
                     && $beginBlock < $endBlock){
                 
                 // find dataset
-                $block = $colSep;
+                $block = $colSepDestination;
                 $block .= substr($html
-                        , $beginBlock + strlen($rowBegin)
+                        , $beginBlock + strlen($rowBeginDestination)
                         , $endBlock
                 );
-                if(substr_count($block, $colSep) === count($cols)){
+                if(substr_count($block, $colSepDestination) === count($cols)){
                     $blockData = array();
                     
                     // extract dataset
                     foreach($cols as $col){
-                        $endPos = strpos($block, $colSep, $sepLen);
+                        $endPos = strpos($block, $colSepDestination, $sepLen);
                         $data = substr($block
                                 , $sepLen
                                 , $endPos - $sepLen - 1
@@ -91,7 +99,7 @@ class Stammtisch extends AppModel{
                     $parsedData[] = $blockData;
                 }
                 
-                $html = substr($html, $endBlock + strlen($rowEnd));
+                $html = substr($html, $endBlock + strlen($rowEndDestination));
             }else{
                 $html = FALSE;
             }
@@ -103,8 +111,6 @@ class Stammtisch extends AppModel{
             if($file !== FALSE){
                 fwrite($file, "var stammtische = eval(".json_encode($parsedData).");");
                 fclose($file);
-            }else{
-                trigger_error($destination." ohne Schreibrechte :-(", E_USER_NOTICE);
             }
         }
     }
