@@ -28,7 +28,7 @@ map.addLayer(bawue);
 
 for(i = 0; i < stammtische.length; i++) {
     s = stammtische[i];
-    text = "<h1>" + s.Typ + "&nbsp;" + s.Ort + "</h1>"
+    text = "<h1>" + s.Typ + " " + s.Ort + "</h1>"
 //         + "<strong>Kontakt:</strong>"
 //         + "<a href=\"http://wiki.piratenpartei.de/Benutzer:" + s.nick + "\">"
 //         + s.name
