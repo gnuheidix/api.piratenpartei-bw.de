@@ -49,7 +49,16 @@ class AppModel extends Model {
      */
     public function lock($name = 'SPERRE'){
         $result = $this->query('SELECT GET_LOCK ("'.$name.'", 7)');
-        return  $result[0][0][key($result[0][0])];
+        return $result[0][0][key($result[0][0])];
+    }
+    
+    /**
+     * Checks whether the lock is free or not.
+     * @param string $name The name of the lock to check.
+     */
+    public function isFreeLock($name = 'SPERRE'){
+        $result = $this->query('SELECT IS_FREE_LOCK("'.$name.'")');
+        return $result[0][0][key($result[0][0])];
     }
     
     /**
@@ -57,7 +66,6 @@ class AppModel extends Model {
      * @param string $name The name of the lock to release.
      */
     public function unlock($name = 'SPERRE'){
-        $dbo = $this->getDataSource();
-        $dbo->execute('SELECT RELEASE_LOCK("'.$name.'")');
+        $dbo = $this->query('SELECT RELEASE_LOCK("'.$name.'")');
     }
 }

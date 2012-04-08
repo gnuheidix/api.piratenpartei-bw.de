@@ -61,7 +61,7 @@ class WikiPage extends AppModel {
         // request page from wiki
         $content = $this->retrievePageContent($title);
         $retval = false;
-        if($content !== FALSE){
+        if($content !== FALSE && $this->isFreeLock(md5($title))){
             
             // replace all relative source links
             $content = str_replace(
@@ -93,7 +93,7 @@ class WikiPage extends AppModel {
                     // will be delivered.
                     if($this->lock(md5($title))){
                         $data = $wikiImageObj->replaceImages($data);
-                        $this->unlock();
+                        $this->unlock(md5($title));
                     }
                 }
                 $retval = $data;
