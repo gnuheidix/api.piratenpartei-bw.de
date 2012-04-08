@@ -61,7 +61,7 @@ class WikiPage extends AppModel {
         // request page from wiki
         $content = $this->retrievePageContent($title);
         $retval = false;
-        if($content !== FALSE && $this->isFreeLock(md5($title))){
+        if($content !== FALSE){
             
             // replace all relative source links
             $content = str_replace(
@@ -91,7 +91,9 @@ class WikiPage extends AppModel {
                     // in the file system. (orphan image files)
                     // If we fail, uncached images with working image links
                     // will be delivered.
-                    if($this->lock(md5($title))){
+                    if($this->isFreeLock(md5($title))&&
+                        $this->lock(md5($title))
+                    ){
                         $data = $wikiImageObj->replaceImages($data);
                         $this->unlock(md5($title));
                     }

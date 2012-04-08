@@ -81,7 +81,7 @@ class WikiImage extends AppModel {
     }
     
     /**
-     * Each save saves the dependent file into local filesystem.
+     * Each save downloads the dependent file into local filesystem.
      * @see Model::save()
      */
     public function save($data = null, $validate = true, $fieldList = array()){
