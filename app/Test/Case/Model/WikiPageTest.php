@@ -18,6 +18,10 @@ class WikiPageTestCase extends CakeTestCase {
     
     public function setup(){
         parent::setUp();
+        // set autoupdate to a fairly high value in order to check
+        // whther the system can see the difference between relatively new
+        // and outdated entries
+        Configure::write('System.autoupdateage', 7200);
         $this->WikiPage = ClassRegistry::init('WikiPage');
     }
     
