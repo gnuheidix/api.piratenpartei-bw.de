@@ -22,6 +22,11 @@ $config['System'] = array(
     /*
     ,'cronupdateage' => 3600
     */
+    /**
+     * Determines whether the install method /install shall try to execute
+     * the db dump in /app/dump.sql
+     */
+    ,'enableinstall' => false
 );
 
 $config['WikiPage'] = array(
