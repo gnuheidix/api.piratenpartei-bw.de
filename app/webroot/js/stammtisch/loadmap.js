@@ -21,6 +21,7 @@ var MyIcon = L.Icon.extend({
     popupAnchor: new L.Point(18, -33)
 });
 
+map.scrollWheelZoom.disable();
 map.addLayer(cloudmade);
 
 var bawue = new L.Polygon(BaWueCoordinates, {color:'#F80',fillColor:'#F80',smoothFactor:5});
