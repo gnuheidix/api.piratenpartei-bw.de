@@ -13,6 +13,7 @@ var MyIcon = L.Icon.extend({
     popupAnchor: new L.Point(18, -33)
 });
 
+map.scrollWheelZoom.disable();
 map.addLayer(cloudmade);
 map.addLayer(bawue);
 
