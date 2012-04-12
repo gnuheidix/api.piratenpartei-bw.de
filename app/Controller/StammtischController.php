@@ -59,7 +59,6 @@ class StammtischController extends AppController{
      */
     public function index(){
         $this->layout = 'default-trans';
-        // see /app/View/Stammtisch/index.ctp
     }
     
     /**
@@ -67,7 +66,13 @@ class StammtischController extends AppController{
      */
     public function karte(){
         $this->layout = 'barebone';
+        
+        $this->set('min_zoom', 6);
+        $this->set('max_zoom', 18);
+        $this->set('default_zoom', 8);
+        $this->set('pos_lat', 48.54);
+        $this->set('pos_lon', 9.04);
+        
         $this->Stammtisch->updateStammtische();
-        // see /app/View/Stammtisch/karte.ctp
     }
 }
