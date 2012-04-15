@@ -124,7 +124,7 @@ class WikiPage extends AppModel {
         ));
         
         // @ deactivates warnings caused by HTTP404 or other failing stuff
-        return @file_get_contents($baseUrl.$title);
+        return @file_get_contents($baseUrl.$title, false, $context);
     }
 }
 ?>

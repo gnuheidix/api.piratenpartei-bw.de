@@ -36,12 +36,15 @@ var map = new L.Map(
     'map'
     ,{
         center: new L.LatLng(
-            ".$pos_lat."
-            ,".$pos_lon."
+            ".$lat."
+            ,".$lon."
         )
     ,zoom: ".$default_zoom."
     }
 );
+if(!".$scroll_zoom."){
+    map.scrollWheelZoom.disable();
+}
 var bawue = new L.Polygon(
     BaWueCoordinates
     ,{

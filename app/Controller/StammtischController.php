@@ -67,12 +67,74 @@ class StammtischController extends AppController{
     public function karte(){
         $this->layout = 'barebone';
         
-        $this->set('min_zoom', 6);
-        $this->set('max_zoom', 18);
-        $this->set('default_zoom', 8);
-        $this->set('pos_lat', 48.54);
-        $this->set('pos_lon', 9.04);
+        $minZoom = $this->validateInt('minzoom', 3, 24, 6);
+        $maxZoom = $this->validateInt('maxzoom', 3, 24, 18);
+        $defaultZoom = $this->validateInt('defaultzoom', 3, 24, 8);
+        $lat = $this->validateFloat('lat', -90, 90, 48.54);
+        $lon = $this->validateFloat('lon', -180, 180, 9.04);
+        $scrollZoom = $this->validateBoolean('scrollzoom');
         
+        $this->set('min_zoom', $minZoom);
+        $this->set('max_zoom', $maxZoom);
+        $this->set('default_zoom', $defaultZoom);
+        $this->set('lat', $lat);
+        $this->set('lon', $lon);
+        $this->set('scroll_zoom', $scrollZoom);
         $this->Stammtisch->updateStammtische();
+    }
+    
+    /**
+     * Gets an integer from params
+     * @param string $param
+     * @param int $min
+     * @param int $max
+     * @param int $default
+     * @return The validated param as int or the default.
+     */
+    protected function validateInt($param, $min, $max, $default = 0){
+        $retval = $default;
+        if(!empty($this->params['named'][$param])
+                && ((int)$this->params['named'][$param]) <= $max
+                && ((int)$this->params['named'][$param]) >= $min
+        ){
+            $retval = (int)$this->params['named'][$param];
+        }
+        return $retval;
+    }
+    
+    /**
+     * Gets a float from params
+     * @param string $param
+     * @param float $min
+     * @param float $max
+     * @param float $default
+     * @return The validated param as float or the default.
+     */
+    protected function validateFloat($param, $min, $max, $default = 0){
+        $retval = $default;
+        if(!empty($this->params['named'][$param])
+                && ((float)$this->params['named'][$param]) <= $max
+                && ((float)$this->params['named'][$param]) >= $min
+        ){
+            $retval = (float)$this->params['named'][$param];
+        }
+        return $retval;
+    }
+    
+    /**
+     * Gets a boolean from params
+     * @param string $param
+     * @param string $default Should be 'true' or 'false'
+     * @return string The validated param as string ('true' or 'false')
+     *     or the default
+     */
+    protected function validateBoolean($param, $default = 'true'){
+        $retval = $default;
+        if(isset($this->params['named'][$param])
+                && $this->params['named'][$param] === '0'
+        ){
+            $retval = 'false';
+        }
+        return $retval;
     }
 }

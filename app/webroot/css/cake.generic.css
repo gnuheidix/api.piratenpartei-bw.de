@@ -265,8 +265,7 @@ dt {
 	width: 10em;
 }
 dd {
-	margin-left: 10em;
-	margin-top: -2em;
+	padding-left: 2em;
 	vertical-align: top;
 }
 
