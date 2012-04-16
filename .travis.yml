@@ -23,11 +23,9 @@ env:
 # execute any number of scripts before the test run, custom env's are available as variables
 before_script:
 #  - if [[ "$DB" == "mysql" ]]; then mysql -e "create database IF NOT EXISTS hello_world_test;" -uroot; fi
-
 # omitting "script:" will default to phpunit
-script:
-./app/Console/cake testsuite app Model/WikiPage
+script: ./app/Console/cake testsuite app Model/WikiPage
 
 # configure notifications (email, IRC, campfire etc)
-notifications:
-    email: false
+#notifications:
+# email: false
