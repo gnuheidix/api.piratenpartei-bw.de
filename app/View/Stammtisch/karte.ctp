@@ -26,25 +26,24 @@ var cloudmadeAttrib = 'Data, imagery and map information provided by <a href=\"h
 var cloudmade = new L.TileLayer(
     cloudmadeUrl
     ,{
-        maxZoom: ".$max_zoom."
-        ,minZoom: ".$min_zoom."
-        ,attribution: cloudmadeAttrib
+        attribution: cloudmadeAttrib
         ,subdomains: subDomains
     }
 );
 var map = new L.Map(
     'map'
     ,{
-        center: new L.LatLng(
+        maxZoom: ".$max_zoom."
+        ,minZoom: ".$min_zoom."
+        ,center: new L.LatLng(
             ".$lat."
             ,".$lon."
         )
-    ,zoom: ".$default_zoom."
+        ,zoom: ".$default_zoom."
+        ,scrollWheelZoom: ".$scroll_zoom."
+        ,dragging: ".$dragging."
     }
 );
-if(!".$scroll_zoom."){
-    map.scrollWheelZoom.disable();
-}
 var bawue = new L.Polygon(
     BaWueCoordinates
     ,{

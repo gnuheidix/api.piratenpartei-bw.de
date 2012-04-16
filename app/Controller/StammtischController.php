@@ -73,6 +73,7 @@ class StammtischController extends AppController{
         $lat = $this->validateFloat('lat', -90, 90, 48.54);
         $lon = $this->validateFloat('lon', -180, 180, 9.04);
         $scrollZoom = $this->validateBoolean('scrollzoom');
+        $dragging = $this->validateBoolean('dragging');
         
         $this->set('min_zoom', $minZoom);
         $this->set('max_zoom', $maxZoom);
@@ -80,6 +81,7 @@ class StammtischController extends AppController{
         $this->set('lat', $lat);
         $this->set('lon', $lon);
         $this->set('scroll_zoom', $scrollZoom);
+        $this->set('dragging', $dragging);
         $this->Stammtisch->updateStammtische();
     }
     
