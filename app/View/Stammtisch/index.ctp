@@ -34,6 +34,6 @@
 <iframe class="karte" src="stammtisch/karte"></iframe>
 <h4>Beispieleinbindung mit angepassten Werten für den KV Konstanz</h4>
 <ul>
-    <li><a href="stammtisch/karte/lat:47.745/lon:9.012/scrollzoom:0/defaultzoom:11/drag:0">/stammtisch/karte/lat:47.745/lon:9.012/scrollzoom:0/defaultzoom:11</a></li>
+    <li><a href="stammtisch/karte/lat:47.745/lon:9.012/scrollzoom:0/defaultzoom:11">/stammtisch/karte/lat:47.745/lon:9.012/scrollzoom:0/defaultzoom:11</a></li>
 </ul>
-<iframe class="karte" src="stammtisch/karte/lat:47.745/lon:9.012/scrollzoom:0/defaultzoom:11/drag:0"></iframe>
+<iframe class="karte" src="stammtisch/karte/lat:47.745/lon:9.012/scrollzoom:0/defaultzoom:11"></iframe>
