@@ -46,8 +46,9 @@ class Stammtisch extends AppModel{
         $sepLen = strlen($colSepDestination);
         
         // retrieve content from WikiPage
-        $wikiPageObj = new WikiPage();
+        $wikiPageObj = ClassRegistry::init('WikiPage');
         $wikiPage = $wikiPageObj->getPage($pageTitle);
+        $html = FALSE;
         if(!empty($wikiPage)){
             // check age and length of generated file
             if(   is_writable($destination)
