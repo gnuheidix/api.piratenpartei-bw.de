@@ -42,9 +42,7 @@ before_script:
       'prefix' => ''
     );
     }" > app/Config/database.php
-#  - sh app/Console/cake schema create WikiPages
-#  - sh app/Console/cake schema create WikiElements
-#  - sh app/Console/cake schema create WikiImages
+  - sh createSchema.sh
 
 script: ./app/Console/cake testsuite app Model/WikiPage
 
