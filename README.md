@@ -4,6 +4,7 @@ Eine Applikation, welche aus Datenquellen wie dem [Piratenwiki](http://wiki.pira
 
 ## Projektstand
 Zur Zeit wird zur Zeit werden Ideen für das zweite Release dieser Appliktaion gesammelt. Mach mit! :-)
+[![Build Status](https://secure.travis-ci.org/gnuheidix/api.piratenpartei-bw.de.png?branch=master)](http://travis-ci.org/gnuheidix/api.piratenpartei-bw.de)
 
 ## Dokumentation
 Weitere Informationen gibt es im [Wiki des Projekts](https://github.com/gnuheidix/api.piratenpartei-bw.de/wiki).
