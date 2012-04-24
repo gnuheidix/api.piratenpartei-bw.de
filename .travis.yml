@@ -22,7 +22,7 @@ before_script:
     public \$default = array(
       'datasource' => 'Database/Mysql',
       'host' => '0.0.0.0',
-      'login' => 'travis'
+      'login' => 'travis',
       'persistent' => false,
       'host' => '',
       'login' => '',
@@ -33,7 +33,7 @@ before_script:
     public \$test = array(
       'datasource' => 'Database/Mysql',
       'host' => '0.0.0.0',
-      'login' => 'travis'
+      'login' => 'travis',
       'persistent' => false,
       'host' => '',
       'login' => '',
