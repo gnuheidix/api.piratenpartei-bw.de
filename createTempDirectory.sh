@@ -6,7 +6,6 @@ mkdir app/tmp/cache/persistent
 mkdir app/tmp/cache/views
 mkdir app/tmp/logs
 mkdir app/tmp/sessions
-mkdir app/webroot/img/wikiimage
 touch app/webroot/js/stammtisch/data.js
 
 echo "Bitte nun Schreibrechte für den Webserver verleihen. Beispiel:"

@@ -41,7 +41,7 @@ class AutoschemaShell extends SchemaShell {
  * @param string $table
  * @return void
  */
-    protected function _create($Schema, $table = null) { $this->out("hier");
+    protected function _create($Schema, $table = null) {
         $db = ConnectionManager::getDataSource($this->Schema->connection);
 
         $drop = $create = array();
