@@ -66,6 +66,7 @@ class StammtischController extends AppController{
      */
     public function karte(){
         $this->layout = 'barebone';
+        $this->Stammtisch->updateStammtische();
         
         $minZoom = $this->validateInt('minzoom', 3, 24, 6);
         $maxZoom = $this->validateInt('maxzoom', 3, 24, 18);
@@ -82,7 +83,47 @@ class StammtischController extends AppController{
         $this->set('lon', $lon);
         $this->set('scroll_zoom', $scrollZoom);
         $this->set('dragging', $dragging);
-        $this->Stammtisch->updateStammtische();
+    }
+    
+    /**
+     * Renders an iCal file for a certain stammtisch appointment.
+     * @param int $id The ID of the appointment to render.
+     */
+    public function termin_ics($id = 0){
+        $event = $this->Stammtisch->findById($id);
+        if(!empty($event)){
+            $this->layout = 'ajax';
+            $event['Stammtisch']['timestamp'] = strtotime($event['Stammtisch']['date']);
+            $this->set('event', $event);
+        }else{
+            $this->Session->setFlash('Es wurde leider kein Kalendereintrag gefunden: :-(');
+        }
+    }
+    
+    /**
+     * Renders an iCal file for a certain stammtisch appointment.
+     * @param int $id The ID of the appointment to render.
+     */
+    public function termine(){
+        $events = $this->Stammtisch->find(
+            'all'
+            ,array(
+                'conditions' => array(
+                    array(
+                        'not' => array(
+                            'Stammtisch.date' => null
+                     )
+                    )
+                )
+                ,'recursive' => -1
+            )
+        );
+        if(!empty($events)){
+            $this->layout = 'barebone';
+            $this->set('events', $events);
+        }else{
+            $this->Session->setFlash('Es wurden leider keine Kalendereinträge gefunden: :-(');
+        }
     }
     
     /**

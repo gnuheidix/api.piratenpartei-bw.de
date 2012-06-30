@@ -18,7 +18,7 @@ map.addLayer(bawue);
 
 for(i = 0; i < stammtische.length; i++) {
     s = stammtische[i];
-    text = "<h1>" + s.Typ + " " + s.Ort + "</h1>"
+    text = "<h1>" + s.typ + " " + s.ort + "</h1>"
 //         + "<strong>Kontakt:</strong>"
 //         + "<a href=\"http://wiki.piratenpartei.de/Benutzer:" + s.nick + "\">"
 //         + s.name
@@ -26,14 +26,20 @@ for(i = 0; i < stammtische.length; i++) {
 //         + "(<a href=\"mailto:" + s.email_local + "@" + s.email_domain + "\">✉</a>)<br />"
          + "<strong>Treffpunkt:</strong>"
          + "<address>"
-         + s.Lokal + "<br />"
-         + s.Straße + "<br />"
-         + s.Ort
-         + "</address><hr />"
+         + s.lokal + "<br />"
+         + s.strasse + "<br />"
+         + s.ort
+         + "</address>"
+    ;
+    if(s.termin !== undefined){
+        text += "<strong>Termin:</strong> " + s.termin + ' Uhr [<a href="/stammtisch/termin_ics/'+ s.id +'">ics</a>]';
+    }
+    text += "<hr/>"
          + "Weitere Informationen finden Sie jederzeit ";
-    if(s.LokalWebsite != "")
-         text += "auf " + s.LokalWebsite + " oder "
-    text += "im Piratenwiki unter " + s.Link + ".";
+    if(s.lokalwebsite != ""){
+         text += "auf " + s.lokalwebsite + " oder ";
+    }
+    text += "im Piratenwiki unter " + s.link + ".";
     var greenIcon = new MyIcon();
     
     if(s.lat !== '' && s.lon !== ''){

@@ -7,6 +7,13 @@
  * @copyright Copyright (c) 2012 Thomas Heidrich and other authors
  */
 ?><p>Diese Funktion stellt Stammtischinformationen auf verschiedene Arten dar.</p>
+<h2>Termine</h2>
+<p>Diese Funktion stellt alle zur Zeit verfügbaren Stammtischtermine in einem Kalender dar.</p>
+<h4>Beispieleinbindung</h4>
+<ul>
+    <li><a href="stammtisch/termine">/stammtisch/termine</a></li>
+</ul>
+<iframe class="karte" src="stammtisch/termine"></iframe>
 <h2>Karte</h2>
 <p>Diese Funktion ist vorzugsweise durch HTML-iframe oder ähnlichen Funktionen einzusetzen, da sie <strong>eine vollständige HTML-Seite</strong> zurückgibt.</p>
 <h3>Parameter</h3>

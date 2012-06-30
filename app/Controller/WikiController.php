@@ -92,7 +92,7 @@ class WikiController extends AppController{
         $params = $this->parseGetParamsWithId($this->params);
         if(!empty($params)){
             extract($params);
-    
+            
             // lookup the WikiPage or fetch it
             $wikiPage = $this->WikiPage->getPage($title);
             if(!empty($wikiPage)){
@@ -186,72 +186,5 @@ class WikiController extends AppController{
         $this->get();
         $this->layout = 'barebone';
         $this->view = 'get';
-    }
-    
-    // ############## CONVENIENCE METHODS ################
-    /**
-     * Parses a client request and extracts title and element-id.
-     * http://url.tld/CONTROLLER/ACTION/TITLE_WITH_SLASHES/ELEMENT_ID
-     * @param Object $paramsObject The object "params" of the client request.
-     *     (usually $this->params)
-     * @return array The extracted title and elementId or false if something
-     *     bad happened.
-     */
-    protected function parseGetParamsWithId($paramsObject){
-        $retval = false;
-        
-        if(!empty($paramsObject)){
-            // extract title and id of the requested wiki page
-            $replaceUrl = $paramsObject->params['controller']
-                .'/'
-                .$paramsObject->params['action']
-                .'/'
-            ;
-            
-            $url = substr($this->params->url, strlen($replaceUrl));
-            $dividerPos = strrpos($url, '/');
-            
-            $title = substr($url, 0, $dividerPos);
-            $elementId = substr($url, $dividerPos + 1);
-            
-            if(!empty($title)
-                && !empty($elementId)){
-                
-                $retval = compact(
-                    $title
-                    , $elementId
-                    , array('title', 'elementId')
-                );
-            }
-        }
-        
-        return $retval;
-    }
-    
-    /**
-     * Parses a client request and extracts title
-     * http://url.tld/CONTROLLER/ACTION/TITLE_WITH_SLASHES
-     * @param Object $paramsObject The object "params" of the client request.
-     *     (usually $this->params)
-     * @return string The extracted page title and false if sth. bad happened.
-     */
-    protected function parseGetParams($paramsObject){
-        $retval = false;
-        
-        if(!empty($paramsObject)){
-            // extract title and id of the requested wiki page
-            $replaceUrl = $paramsObject->params['controller']
-                .'/'
-                .$paramsObject->params['action']
-                .'/'
-            ;
-            $url = substr($this->params->url, strlen($replaceUrl));
-            
-            if(!empty($url)){
-                $retval = $url;
-            }
-        }
-        
-        return $retval;
     }
 }

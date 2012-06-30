@@ -65,15 +65,13 @@ class InstallController extends AppController{
             $filecontent = file_get_contents($filename);
             if($filecontent){
                 $data = $db->query($filecontent);
-                echo "gecallt ".$data;
+                $this->Session->setFlash("Installation durchgeführt - Ergebnis: ".$data);
             }else{
-                echo "Datei ".$filename." nicht gefunden.";
+                $this->Session->setFlash("Datei ".$filename." nicht gefunden.");
             }
         }else{
-            echo "Installationsfunktion deaktiviert :-D";
+            $this->Session->setFlash("Die Installationsfunktion ist zur Zeit deaktiviert.");
         }
-        exit;
-        
     }
 }
 ?>
