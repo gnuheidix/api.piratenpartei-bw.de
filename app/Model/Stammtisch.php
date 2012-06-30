@@ -135,16 +135,12 @@ class Stammtisch extends AppModel{
             foreach($parsedData as $index => $dataset){
                 // parse date and create a correct timestamp if possible
                 $dataset = $this->sanitizeDataset($dataset);
-                $dateTime = DateTime::createFromFormat(
-                    'Y-m-d H:i'
-                    ,$dataset['datum'].' '.$dataset['zeit']
-                );
-                
+                $dateTime = strtotime($dataset['datum'].' '.$dataset['zeit']);
                 $data = array();
                 if($dateTime){
-                    $dateField = date('Y-m-d H:i:s', $dateTime->getTimestamp());
+                    $dateField = date('Y-m-d H:i:s', $dateTime);
                     $data['Stammtisch']['date'] = $dateField;
-                    $parsedData[$index]['termin'] = date('d.m.Y - H:i', $dateTime->getTimestamp());
+                    $parsedData[$index]['termin'] = date('d.m.Y - H:i', $dateTime);
                 }
                 $data['Stammtisch']['data'] = json_encode($dataset);
                 
