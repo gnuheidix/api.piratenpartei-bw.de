@@ -76,20 +76,20 @@ $config['Stammtisch'] = array(
     ,'colsepSource' => "/\<\/td\>(\s*\n)*\<td\>/i"
     ,'colsepDestination' => "</td><td>"
     ,'cols' => array(
-        'Link'
-        , 'Typ'
-        , 'Ort'
-        , 'Datum'
-        , 'Datumsformat'
-        , 'Zeit'
-        , 'Lokal'
-        , 'LokalWebsite'
-        , 'Straße'
-        , 'PLZ'
-        , 'Telefon'
-        , 'Frequenz'
-        , 'lat'
-        , 'lon'
+        'Link' => 'link'
+        , 'Typ' => 'typ'
+        , 'Ort' => 'ort'
+        , 'Datum' => 'datum'
+        , 'Datumsformat' => 'datumsformat'
+        , 'Zeit' => 'zeit'
+        , 'Lokal' => 'lokal'
+        , 'LokalWebsite' => 'lokalwebsite'
+        , 'Straße' => 'strasse'
+        , 'PLZ' => 'plz'
+        , 'Telefon' => 'telefon'
+        , 'Frequenz' => 'frequenz'
+        , 'lat' => 'lat'
+        , 'lon' => 'lon'
     )
 );
 
