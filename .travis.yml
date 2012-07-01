@@ -4,7 +4,6 @@ php:
   - 5.2
   - 5.3
   - 5.4
-
   - 5.3.2
 
 env:
@@ -40,8 +39,12 @@ before_script:
   - sh app/Console/cake autoschema create WikiPages
   - sh app/Console/cake autoschema create WikiElements
   - sh app/Console/cake autoschema create WikiImages
+  - sh app/Console/cake autoschema create Stammtisches
 
-script: ./app/Console/cake testsuite app Model/WikiPage
+script:
+  - ./app/Console/cake testsuite app Model/WikiPage
+  - ./app/Console/cake testsuite app Model/WikiElement
+  - ./app/Console/cake testsuite app Model/Stammtisch
 
 #notifications:
 # email: false

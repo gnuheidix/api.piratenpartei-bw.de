@@ -22,28 +22,36 @@ class WikiElementTestCase extends CakeTestCase {
     }
     
     /**
-     * Tests if a dataset can be retrieved from fixture settings.
+     * WikiElement can be retrieved from Wiki and our own cache?
      */
-    public function testGetElementExisting(){
-        $result = $this->WikiElement->getElement("Kreisverband_Konstanz", "einmalig");
-        $this->assertEqual($result['WikiElement']['updatedat'], date('Y-m-d H:00:00', time()));
-        $this->assertEqual($result['WikiElement']['content'], 'Dies ist ein Test.');
+    public function testGetElement(){
+        $resultLoaded = $this->WikiElement->getElement("Kreisverband_Konstanz", "pkn_intro");
+        $this->assertTrue(!empty($resultLoaded['WikiElement']['content']));
+        sleep(2);
+        $resultCached = $this->WikiElement->getElement("Kreisverband_Konstanz", "pkn_intro");
+        $this->assertEqual($resultLoaded['WikiElement']['content'], $resultCached['WikiElement']['content']);
+        $this->assertEqual($resultLoaded['WikiElement']['updatedat'], $resultCached['WikiElement']['updatedat']);
+        
+        $this->WikiElement->id = $resultLoaded['WikiElement']['id'];
+        $requestedTime = $this->WikiElement->field('requested');
+        $this->assertNotEqual($resultLoaded['WikiElement']['requested'], $requestedTime);
     }
     
     /**
-     * Tests if a dataset can be retrieved from fixture settings and updated from the Wiki.
-     *
-    public function testGetPageExistingUpdated(){
-        $result = $this->WikiPage->getPage("BW:Kreisverband_Konstanz");
-        $this->assertNotEqual($result['WikiPage']['content'], '<div id="einmalig">Dies ist ein Test.</div>');
-    }
-    
-    /**
-     * Tests if a dataset can be retrieved from fixture settings and updated from the Wiki.
-     *
-    public function testGetPageExistingNotAvailable(){
-        $result = $this->WikiPage->getPage("nix:da");
+     * Test resultset if a not existing page + element gets requested.
+     */
+    public function testGetPageAndElementNotAvailable(){
+        $result = $this->WikiElement->getElement("nix:da", "garnix");
         $this->assertEqual($result, false);
-    }*/
+    }
+    
+    
+    /**
+     * Test resultset if a not existing element gets requested.
+     */
+    public function testGetElementNotAvailable(){
+        $result = $this->WikiElement->getElement("Kreisverband_Konstanz", "garnix");
+        $this->assertEqual($result, false);
+    }
 }
 ?>

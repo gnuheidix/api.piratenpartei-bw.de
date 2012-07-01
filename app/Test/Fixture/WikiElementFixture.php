@@ -25,8 +25,8 @@ class WikiElementFixture extends CakeTestFixture {
     public function __construct(){
         
         $this->records = array(
-            array('id' => 1, 'page_id' => 1, 'element_id' => 'einmalig', 'content' => 'Dies ist ein Test.', 'requested' => date('Y-m-d H:00:00', time()), 'updatedat' => date('Y-m-d H:00:00', time()), 'created' => '2007-03-18 10:39:23')
-            ,array('id' => 2, 'page_id' => 1, 'element_id' => 'einmalig', 'content' => 'Dies ist ein Test.', 'requested' => '2007-03-18 10:39:23', 'updatedat' => '2007-03-18 10:39:23', 'created' => '2007-03-18 10:39:23')
+            array('id' => 1, 'page_id' => 1, 'element_id' => 'pkn_intro', 'content' => 'Dies ist ein Test.', 'requested' => date('Y-m-d H:00:00', time()), 'updatedat' => date('Y-m-d H:00:00', time()), 'created' => '2007-03-18 10:39:23')
+            ,array('id' => 2, 'page_id' => 1, 'element_id' => 'pkn_intro', 'content' => 'Dies ist ein Test.', 'requested' => '2007-03-18 10:39:23', 'updatedat' => '2007-03-18 10:39:23', 'created' => '2007-03-18 10:39:23')
         );
         
         parent::__construct();

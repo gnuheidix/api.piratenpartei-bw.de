@@ -69,7 +69,7 @@ class WikiElement extends AppModel {
         $pageId = $wikiPage['WikiPage']['id'];
         $pageContent = $wikiPage['WikiPage']['content'];
         $content = $this->extractElement($pageContent, $elementId);
-        $retval = array();
+        $retval = false;
         if(!empty($content)){
             $this->create();
             $data = $this->findByPageIdAndElementId($pageId, $elementId);
