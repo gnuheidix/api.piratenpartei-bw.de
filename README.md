@@ -3,14 +3,14 @@
 Eine Applikation, welche aus Datenquellen wie dem [Piratenwiki](http://wiki.piratenpartei.de/) parteibezogene Informationen extrahiert und komfortabel zugreifbar bereitstellt.
 
 ## Projektstand
-Zur Zeit wird zur Zeit werden Ideen für das zweite Release dieser Appliktaion gesammelt. Mach mit! :-)
+Bis neue Anforderungen an diese Applikation gestellt werden, liegt der Schwerpunkt bei Wartungsarbeiten. Mach mit! Stell neue Anforderungen, schreib Bugreports, reviewe das Design, den Code, die Doku,... :-)
+
 [![Build Status](https://secure.travis-ci.org/gnuheidix/api.piratenpartei-bw.de.png?branch=master)](http://travis-ci.org/gnuheidix/api.piratenpartei-bw.de)
 
 ## Dokumentation
 Weitere Informationen gibt es im [Wiki des Projekts](https://github.com/gnuheidix/api.piratenpartei-bw.de/wiki).
 
 ## Lizenz
-
 (The MIT License)
 
 Copyright (c) 2012 Thomas Heidrich and other authors
