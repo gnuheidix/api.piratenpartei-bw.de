@@ -32,7 +32,7 @@ for(i = 0; i < stammtische.length; i++) {
          + "</address>"
     ;
     if(s.termin !== undefined){
-        text += "<strong>Termin:</strong> " + s.termin + ' Uhr [<a href="/stammtisch/termin_ics/'+ s.id +'">ics</a>]';
+        text += "<strong>Termin:</strong> " + s.termin + ' Uhr [<a href="/stammtisch/termin_ics/'+ s.id +'">iCal</a>]';
     }
     text += "<hr/>"
          + "Weitere Informationen finden Sie jederzeit ";

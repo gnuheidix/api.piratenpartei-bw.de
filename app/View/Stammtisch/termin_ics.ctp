@@ -9,7 +9,7 @@
 ?><?php
 if(!empty($event)){
     header('Content-type: text/calendar; charset=utf-8');
-    header('Content-Disposition: attachment; filename='.$event['Stammtisch']['data']['plz'].'.ics');
+    header('Content-Disposition: attachment; filename="'.$event['Stammtisch']['data']['plz'].'.ics"');
     echo "BEGIN:VCALENDAR\n";
     echo "METHOD:PUBLISH\n";
     echo "UID:". md5(uniqid(mt_rand(), true)) ."@api.piratenpartei-bw.de";

@@ -41,6 +41,25 @@ App::uses('Model', 'Model');
 class AppModel extends Model {
     
     /**
+     * @var resource Used in http-requests to external resources realizing equal settings
+     * in each one of them.
+     */
+    protected $streamContext;
+    
+    /**
+     * 
+     * Enter description here ...
+     */
+    public function __construct($id = false, $table = null, $ds = null){
+        parent::__construct($id, $table, $ds);
+        $this->streamContext = stream_context_create(array(
+            'http' => array(
+                'timeout' => Configure::read('WikiPage.requesttimeout')
+            )
+        ));
+    }
+    
+    /**
      * Start Lock - All other processes trying to lock, will wait
      * for at least seven seconds.
      * see: http://dev.mysql.com/doc/refman/5.1/de/miscellaneous-functions.html

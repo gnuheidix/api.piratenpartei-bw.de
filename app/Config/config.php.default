@@ -38,7 +38,7 @@ $config['WikiPage'] = array(
     /**
      * Time in seconds allowed for one request using file_get_contents.
      */
-    ,'requesttimeout' => 5
+    ,'requesttimeout' => 9
     /**
      * The URL of the wiki where all relative links can be appended to.
      */
@@ -91,6 +91,11 @@ $config['Stammtisch'] = array(
         , 'lat' => 'lat'
         , 'lon' => 'lon'
     )
+    /**
+     * Determines whether geo coordinates of stammtisches shall be retrieved
+     * from an external webservice.
+     */
+    ,'geolocationQueryEnabled' => true
 );
 
 

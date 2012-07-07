@@ -133,17 +133,25 @@ class Stammtisch extends AppModel{
             $baseWikiUrl = Configure::read('WikiPage.baseimageurl');
             // add new database entries
             foreach($parsedData as $index => $dataset){
-                // parse date and create a correct timestamp if possible
+                // parse date, create a correct timestamp, geocode address if possible
                 $dataset = $this->sanitizeDataset($dataset);
+                
+                // extract render date timestamp if possible
                 $dateTime = strtotime($dataset['datum'].' '.$dataset['zeit']);
+                
+                // render data array to be written to database
                 $data = array();
                 if($dateTime){
                     $dateField = date('Y-m-d H:i:s', $dateTime);
                     $data['Stammtisch']['date'] = $dateField;
-                    $parsedData[$index]['termin'] = date('d.m.Y - H:i', $dateTime);
+                    $dataset['termin'] = date('d.m.Y - H:i', $dateTime);
                 }
                 $data['Stammtisch']['data'] = json_encode($dataset);
                 
+                // update data array with sanitized data which will be written to the file system
+                $parsedData[$index] = $dataset;
+                
+                // write sanitized data to database
                 $data = $this->create($data);
                 if($this->save($data)){
                     $parsedData[$index]['id'] = $this->id;
@@ -152,7 +160,7 @@ class Stammtisch extends AppModel{
                 }
             }
             
-            // write data to file if possible
+            // write data to file system if possible
             $file = fopen($destination, 'w');
             if($file !== FALSE){
                 fwrite($file, "var stammtische = eval(".json_encode($parsedData).");");
@@ -182,8 +190,58 @@ class Stammtisch extends AppModel{
             }else{
                 $dataset['zeit'] = '00:00';
             }
+            
+            // retrieve geo coordinates from external webservice if needed
+            if(empty($dataset['lat'])
+                && empty($dataset['lon'])
+                && Configure::read('Stammtisch.geolocationQueryEnabled')
+            ){
+                $coordinates = $this->osmGeoCoordinates(
+                    $dataset['strasse']
+                    ,$dataset['plz']
+                    ,$dataset['ort']
+                );
+                if(!empty($coordinates['lat'])
+                    && !empty($coordinates['lon'])
+                ){
+                    $dataset['lat'] = $coordinates['lat'];
+                    $dataset['lon'] = $coordinates['lon'];
+                }
+            }
         }
         return $dataset;
+    }
+    
+    /**
+     * Retrieves geo coordinates from OpenStreetMap for a certain address.
+     * @param string $street The street of the address to geocode.
+     * @param string $postcode The postcode of the address to geocode.
+     * @param string $town The town name of the address to geocode.
+     */
+    protected function osmGeoCoordinates($street, $postcode, $town){
+        $retval = array();
+        $requestPath = 'http://nominatim.openstreetmap.org/search/'
+            .'?format=json'
+            .'&countrycodes=de'
+            .'&limit=1'
+            .'&addressdetails=0'
+            .'&q='.urlencode($street.', '.$postcode.', '.$town)
+        ;
+        $result = file_get_contents(
+            $requestPath
+            ,false
+            ,$this->streamContext
+        );
+        if($result){
+            $decodedResult = json_decode($result, true);
+            if(!empty($decodedResult[0]['lat'])
+                && !empty($decodedResult[0]['lon'])
+            ){
+                $retval['lat'] = $decodedResult[0]['lat'];
+                $retval['lon'] = $decodedResult[0]['lon'];
+            }
+        }
+        return $retval;
     }
     
     /**

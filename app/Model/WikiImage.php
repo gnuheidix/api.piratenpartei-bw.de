@@ -95,7 +95,7 @@ class WikiImage extends AppModel {
         ;
         
         $retval = parent::save($data, $validate, $fieldList)
-            && copy($data['WikiImage']['source_url'], $imageFile)
+            && copy($data['WikiImage']['source_url'], $imageFile, $this->streamContext)
         ;
         
         return $retval;

@@ -117,14 +117,8 @@ class WikiPage extends AppModel {
     protected function retrievePageContent($title){
         $baseUrl = Configure::read('WikiPage.basepageurl');
         
-        $context = stream_context_create(array(
-            'http' => array(
-                'timeout' => Configure::read('WikiPage.requesttimeout')
-            )
-        ));
-        
         // @ deactivates warnings caused by HTTP404 or other failing stuff
-        return @file_get_contents($baseUrl.$title, false, $context);
+        return @file_get_contents($baseUrl.$title, false, $this->streamContext);
     }
 }
 ?>
