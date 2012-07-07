@@ -220,11 +220,12 @@ class Stammtisch extends AppModel{
      */
     protected function osmGeoCoordinates($street, $postcode, $town){
         $retval = array();
-        $requestPath = 'http://nominatim.openstreetmap.org/search/'
+        $requestPath = Configure::read('Stammtisch.geolocationNominatimInstanceUrl')
             .'?format=json'
             .'&countrycodes=de'
             .'&limit=1'
             .'&addressdetails=0'
+            .'&email='.urlencode(Configure::read('Stammtisch.geolocationContactAddress'))
             .'&q='.urlencode($street.', '.$postcode.', '.$town)
         ;
         $result = file_get_contents(

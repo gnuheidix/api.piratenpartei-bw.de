@@ -96,6 +96,14 @@ $config['Stammtisch'] = array(
      * from an external webservice.
      */
     ,'geolocationQueryEnabled' => true
+    /**
+     * Determines the which nominatim geolocation instance shall be used.
+     */
+    ,'geolocationNominatimInstanceUrl' => 'http://nominatim.openstreetmap.org/search'
+    /**
+     * The contact address for the geocoding service administrator.
+     */
+    ,'geolocationContactAddress' => ''
 );
 
 
