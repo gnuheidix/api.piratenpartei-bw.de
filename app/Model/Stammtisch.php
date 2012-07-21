@@ -38,6 +38,7 @@ class Stammtisch extends AppModel{
             && (
                 time() - filemtime($destination) > $maxage
                 || filesize($destination) === 0
+                || defined('CRON_DISPATCHER')
             )
         ){
             // try to prevent other processes to update

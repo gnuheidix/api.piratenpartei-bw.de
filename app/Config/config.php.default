@@ -19,9 +19,6 @@ $config['System'] = array(
      * during the request
      */
     ,'autoupdateage' => 7200
-    /*
-    ,'cronupdateage' => 3600
-    */
     /**
      * Determines whether the install method /install shall try to execute
      * the db dump in /app/dump.sql

@@ -19,8 +19,14 @@
  *
  * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
- * @package       Cake.View.Layouts
+ * @package       Cake.View.Pages
  * @since         CakePHP(tm) v 0.10.0.1076
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-?><?php echo $content_for_layout; ?>
+?><?php
+
+if(isset($show_query_count)){
+    echo "SQL-Queries: ".$this->element('sql_query_count')."\n";
+}
+
+?>

@@ -40,7 +40,6 @@ class GeoCoordinateTestCase extends CakeTestCase {
      */
     public function testGeocodingFailure(){
         $result = $this->GeoCoordinate->getCoordinates('Straße 323/1', '8485', 'nicht existierende Stadt');
-        pr($result);
         $this->assertTrue(empty($result));
     }
 }
