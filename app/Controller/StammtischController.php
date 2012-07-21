@@ -68,13 +68,13 @@ class StammtischController extends AppController{
         $this->layout = 'barebone';
         $this->Stammtisch->updateStammtische();
         
-        $minZoom = $this->validateInt('minzoom', 3, 24, 6);
-        $maxZoom = $this->validateInt('maxzoom', 3, 24, 18);
-        $defaultZoom = $this->validateInt('defaultzoom', 3, 24, 8);
-        $lat = $this->validateFloat('lat', -90, 90, 48.54);
-        $lon = $this->validateFloat('lon', -180, 180, 9.04);
-        $scrollZoom = $this->validateBoolean('scrollzoom');
-        $dragging = $this->validateBoolean('dragging');
+        $minZoom = $this->sanitizeIntParam('minzoom', 3, 24, 6);
+        $maxZoom = $this->sanitizeIntParam('maxzoom', 3, 24, 18);
+        $defaultZoom = $this->sanitizeIntParam('defaultzoom', 3, 24, 8);
+        $lat = $this->sanitizeFloatParam('lat', -90, 90, 48.54);
+        $lon = $this->sanitizeFloatParam('lon', -180, 180, 9.04);
+        $scrollZoom = $this->sanitizeBooleanParam('scrollzoom');
+        $dragging = $this->sanitizeBooleanParam('dragging');
         
         $this->set('min_zoom', $minZoom);
         $this->set('max_zoom', $maxZoom);
@@ -132,9 +132,9 @@ class StammtischController extends AppController{
      * @param int $min
      * @param int $max
      * @param int $default
-     * @return The validated param as int or the default.
+     * @return The sanitized param as int or the default.
      */
-    protected function validateInt($param, $min, $max, $default = 0){
+    protected function sanitizeIntParam($param, $min, $max, $default = 0){
         $retval = $default;
         if(!empty($this->params['named'][$param])
                 && ((int)$this->params['named'][$param]) <= $max
@@ -151,9 +151,9 @@ class StammtischController extends AppController{
      * @param float $min
      * @param float $max
      * @param float $default
-     * @return The validated param as float or the default.
+     * @return The sanitized param as float or the default.
      */
-    protected function validateFloat($param, $min, $max, $default = 0){
+    protected function sanitizeFloatParam($param, $min, $max, $default = 0){
         $retval = $default;
         if(!empty($this->params['named'][$param])
                 && ((float)$this->params['named'][$param]) <= $max
@@ -168,10 +168,10 @@ class StammtischController extends AppController{
      * Gets a boolean from params
      * @param string $param
      * @param string $default Should be 'true' or 'false'
-     * @return string The validated param as string ('true' or 'false')
+     * @return string The sanitized param as string ('true' or 'false')
      *     or the default
      */
-    protected function validateBoolean($param, $default = 'true'){
+    protected function sanitizeBooleanParam($param, $default = 'true'){
         $retval = $default;
         if(isset($this->params['named'][$param])
                 && $this->params['named'][$param] === '0'

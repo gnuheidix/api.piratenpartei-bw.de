@@ -8,10 +8,7 @@
  */
 ?><?php
 /**
- * This is i18n Schema file
- *
  * Use it to configure database
- *
  */
 
 /*
@@ -38,5 +35,4 @@ class StammtischesSchema extends CakeSchema {
             'created' => array('type'=>'datetime', 'null' => false),
             'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1))
     );
-
 }

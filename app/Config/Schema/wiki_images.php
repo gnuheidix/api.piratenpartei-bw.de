@@ -8,10 +8,7 @@
  */
 ?><?php
 /**
- * This is i18n Schema file
- *
  * Use it to configure database
- *
  */
 
 /*
@@ -39,6 +36,5 @@ class WikiImagesSchema extends CakeSchema {
             'created' => array('type'=>'datetime', 'null' => false),
             'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'source_url' => array('column' => 'source_url'), 'image_file' => array('column' => 'image_file'), 'page_id' => array('column' => 'page_id'))
     );
-
 }
 ?>

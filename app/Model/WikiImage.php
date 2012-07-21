@@ -7,7 +7,9 @@
  * @copyright Copyright (c) 2012 Thomas Heidrich and other authors
  */
 ?><?php
-App::import('Model', 'WikiPage');
+/**
+ * Replaces images in a WikiPage with locally cached copies of them.
+ */
 class WikiImage extends AppModel {
     var $name = 'WikiImage';
     
@@ -70,7 +72,7 @@ class WikiImage extends AppModel {
         // write replaced content to WikiPage model
         
         if(!empty($newContent)){
-            $wikiPageObj = new WikiPage();
+            $wikiPageObj = ClassRegistry::init('WikiPage');
             $wikiPageObj->id = $data['WikiPage']['id'];
             if($wikiPageObj->saveField('content', $newContent)){
                 $data['WikiPage']['content'] = $newContent;

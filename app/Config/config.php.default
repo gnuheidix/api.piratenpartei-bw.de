@@ -53,7 +53,7 @@ $config['WikiImage'] = array(
         /**
          * Determines whether local image caching is active or not.
          */
-        ,'enabled' => true
+        ,'enabled' => false
 );
 
 $config['Stammtisch'] = array(
@@ -96,10 +96,13 @@ $config['Stammtisch'] = array(
      * from an external webservice.
      */
     ,'geolocationQueryEnabled' => true
+);
+
+$config['GeoCoordinate'] = array(
     /**
      * Determines the which nominatim geolocation instance shall be used.
      */
-    ,'geolocationNominatimInstanceUrl' => 'http://nominatim.openstreetmap.org/search'
+    'geolocationNominatimInstanceUrl' => 'http://nominatim.openstreetmap.org/search'
     /**
      * The contact address for the geocoding service administrator.
      */

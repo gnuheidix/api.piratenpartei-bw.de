@@ -8,10 +8,7 @@
  */
 ?><?php
 /**
- * This is i18n Schema file
- *
  * Use it to configure database
- *
  */
 
 /*
@@ -41,5 +38,4 @@ class WikiElementsSchema extends CakeSchema {
             'created' => array('type'=>'datetime', 'null' => false),
             'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'page_id' => array('column' => 'page_id'), 'element_id' => array('column' => 'element_id'))
     );
-
 }

@@ -7,8 +7,10 @@
  * @copyright Copyright (c) 2012 Thomas Heidrich and other authors
  */
 ?><?php
-APP::import('Model', 'WikiPage');
 
+/**
+ * Extracts parts from a WikiPage and caches them.
+ */
 class WikiElement extends AppModel {
     public $name = 'WikiElement';
     
@@ -36,7 +38,7 @@ class WikiElement extends AppModel {
     public function getElement($pageTitle, $elementId){
         $elementId = urldecode($elementId);
         $maxage = Configure::read('System.autoupdateage');
-        $wikiPageObj = new WikiPage();
+        $wikiPageObj = ClassRegistry::init('WikiPage');
         $wikiPage = $wikiPageObj->getPage($pageTitle);
         $wikiElement = false;
         
