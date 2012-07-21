@@ -36,8 +36,8 @@ class GeoCoordinatesSchema extends CakeSchema {
             'street' => array('type'=>'string', 'null' => true, 'length' => 256, 'key' => 'index'),
             'postcode' => array('type'=>'string', 'null' => true, 'length' => 16, 'key' => 'index'),
             'town' => array('type'=>'string', 'null' => true, 'length' => 256, 'key' => 'index'),
-            'lat' => array('type'=>'float', 'null' => true),
-            'lon' => array('type'=>'float', 'null' => true),
+            'lat' => array('type'=>'float', 'null' => true, 'length' => '9,6'),
+            'lon' => array('type'=>'float', 'null' => true, 'length' => '9,6'),
             'created' => array('type'=>'datetime', 'null' => false),
             'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'street' => array('column' => 'street'), 'postcode' => array('column' => 'postcode'), 'town' => array('column' => 'town'))
     );

@@ -68,7 +68,6 @@ class Stammtisch extends AppModel{
                 $html = preg_replace($rowEndSource, $rowEndDestination, $html);
                 $html = preg_replace($colSepSource, $colSepDestination, $html);
             }
-            
             // parse the HTML table 
             while($html !== FALSE){
                 $beginBlock = strpos($html, $rowBeginDestination);

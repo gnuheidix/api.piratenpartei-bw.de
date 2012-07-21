@@ -38,7 +38,7 @@ $config['WikiPage'] = array(
     /**
      * Time in seconds allowed for one request using file_get_contents.
      */
-    ,'requesttimeout' => 9
+    ,'requesttimeout' => 15
     /**
      * The URL of the wiki where all relative links can be appended to.
      */

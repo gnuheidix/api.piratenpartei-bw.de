@@ -48,10 +48,12 @@ class GeoCoordinate extends AppModel{
                 // if we can't cache the result, we don't serve it
                 $dataset = array();
             }
-        }elseif(empty($dataset['GeoCoordinate']['lat'])
+        }
+        
+        if(empty($dataset['GeoCoordinate']['lat'])
             && empty($dataset['GeoCoordinate']['lon'])
         ){
-            // drop the invalid dataset
+            // drop the dataset, if we have no result
             $dataset = array();
         }
         return $dataset;
