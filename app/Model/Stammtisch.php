@@ -213,7 +213,7 @@ class Stammtisch extends AppModel{
      * (non-PHPdoc)
      * @see Model::afterFind()
      */
-    public function afterFind($results){
+    public function afterFind($results, $primary = false){
         foreach($results as $key => $val){
             if(!empty($val['Stammtisch']['data'])){
                 $results[$key]['Stammtisch']['data'] = json_decode($val['Stammtisch']['data'], true);
