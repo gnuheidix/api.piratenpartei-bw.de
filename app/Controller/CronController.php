@@ -59,8 +59,16 @@ class CronController extends AppController{
      */
     public function trigger($flag = ''){
         if(defined('CRON_DISPATCHER')){
+            // avoid multiple cron processes
+            if(!Cache::read('cron_lock')){
+                Cache::write('cron_lock', true);
+                Cache::write('cronjob_started', time());
+            }else{
+                exit(0);
+            }
             $this->layout = 'ajax';
             $this->message($flag, "Starting...\n");
+            
             // fire up the models
             $wikiPageObject = ClassRegistry::init('WikiPage');
             $wikiElementObject = ClassRegistry::init('WikiElement');
@@ -98,6 +106,8 @@ class CronController extends AppController{
             $this->message($flag, "Updating Stammmtische\n");
             $stammtischObject->updateStammtische();
             $this->message($flag, "Done\n");
+            Cache::delete('cron_lock');
+            Cache::write('cronjob_finished', time());
         }else{
             $this->Session->setFlash("Diese Funktion darf nur von der Kommandozeile aus aufgerufen werden.");
             $this->redirect('/');

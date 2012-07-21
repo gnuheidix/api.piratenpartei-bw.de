@@ -30,3 +30,11 @@ if(!empty($wiki_pages)){
     echo '</ul>';
 }
 ?>
+<h3>Datenaktualisierung</h3>
+Im folgenden ist zu sehen, wann die letzte geplante Datenaktualisierung durchgeführt wurde.
+<dl>
+    <dt>Beginn</dt>
+    <dd><?php echo Cache::read('cronjob_started') ? strftime('%c', Cache::read('cronjob_started')) : 'unbekannt'; ?></dd>
+    <dt>Ende</dt>
+    <dd><?php echo Cache::read('cronjob_finished') ? strftime('%c', Cache::read('cronjob_finished')) : 'unbekannt'; ?></dd>
+</dl>
