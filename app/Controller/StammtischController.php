@@ -62,7 +62,7 @@ class StammtischController extends AppController{
     }
     
     /**
-     * Displays a static manual page
+     * Displays a map with all stammtisches
      */
     public function karte(){
         $this->layout = 'barebone';
@@ -101,10 +101,9 @@ class StammtischController extends AppController{
     }
     
     /**
-     * Renders an iCal file for a certain stammtisch appointment.
-     * @param int $id The ID of the appointment to render.
+     * Displays a calendar with all stammtisches
      */
-    public function termine(){
+    public function kalender(){
         $events = $this->Stammtisch->find(
             'all'
             ,array(
@@ -124,60 +123,16 @@ class StammtischController extends AppController{
         }else{
             $this->Session->setFlash('Es wurden leider keine Kalendereinträge gefunden: :-(');
         }
-    }
-    
-    /**
-     * Gets an integer from params
-     * @param string $param
-     * @param int $min
-     * @param int $max
-     * @param int $default
-     * @return The sanitized param as int or the default.
-     */
-    protected function sanitizeIntParam($param, $min, $max, $default = 0){
-        $retval = $default;
-        if(!empty($this->params['named'][$param])
-                && ((int)$this->params['named'][$param]) <= $max
-                && ((int)$this->params['named'][$param]) >= $min
-        ){
-            $retval = (int)$this->params['named'][$param];
-        }
-        return $retval;
-    }
-    
-    /**
-     * Gets a float from params
-     * @param string $param
-     * @param float $min
-     * @param float $max
-     * @param float $default
-     * @return The sanitized param as float or the default.
-     */
-    protected function sanitizeFloatParam($param, $min, $max, $default = 0){
-        $retval = $default;
-        if(!empty($this->params['named'][$param])
-                && ((float)$this->params['named'][$param]) <= $max
-                && ((float)$this->params['named'][$param]) >= $min
-        ){
-            $retval = (float)$this->params['named'][$param];
-        }
-        return $retval;
-    }
-    
-    /**
-     * Gets a boolean from params
-     * @param string $param
-     * @param string $default Should be 'true' or 'false'
-     * @return string The sanitized param as string ('true' or 'false')
-     *     or the default
-     */
-    protected function sanitizeBooleanParam($param, $default = 'true'){
-        $retval = $default;
-        if(isset($this->params['named'][$param])
-                && $this->params['named'][$param] === '0'
-        ){
-            $retval = 'false';
-        }
-        return $retval;
+        
+        $defaultView = $this->sanitizeStringParam(
+            'defaultview'
+            ,array(
+                'month' => 'month'
+                ,'week' => 'basicWeek'
+                ,'day' => 'basicDay'
+            )
+            ,'month'
+        );
+        $this->set('defaultview', $defaultView);
     }
 }

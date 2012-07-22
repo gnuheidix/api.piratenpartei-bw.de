@@ -7,17 +7,23 @@
  * @copyright Copyright (c) 2012 Thomas Heidrich and other authors
  */
 ?><p>Diese Funktion stellt Stammtischinformationen auf verschiedene Arten dar.</p>
-<h2>Termine</h2>
-<p>Diese Funktion stellt alle zur Zeit verfügbaren Stammtischtermine in einem Kalender dar.</p>
+<h2>Kalender</h2>
+<p>Diese Funktion stellt alle zur Zeit verfügbaren Stammtischtermine in einem Kalender dar. Beim Klick auf einen Termin, öffnet sich die jeweilige Stammtischwikiseite.</p>
+<h3>Parameter</h3>
+<p>Die folgenden Parameter können gesetzt werden.</p>
+<dl>
+    <dt>defaultview</dt>
+    <dd>Definiert, welche Ansicht voreingestellt ist. Erlaubt sind die Werte month, week und day.</dd>
+</dl>
 <h4>Beispieleinbindung</h4>
 <ul>
-    <li><a href="stammtisch/termine">/stammtisch/termine</a></li>
+    <li><a href="stammtisch/kalender">/stammtisch/kalender</a></li>
 </ul>
-<iframe class="karte" src="stammtisch/termine"></iframe>
+<iframe class="karte" src="stammtisch/kalender"></iframe>
 <h2>Karte</h2>
-<p>Diese Funktion ist vorzugsweise durch HTML-iframe oder ähnlichen Funktionen einzusetzen, da sie <strong>eine vollständige HTML-Seite</strong> zurückgibt.</p>
+<p>Diese Funktion stellt alle zur Zeit Stammtischtermine in einer OpenStreetMap-Karte dar. Beim Klick auf einen Stammtischpin werden Detailinformationen dargestellt.</p>
 <h3>Parameter</h3>
-<p></p>
+<p>Die folgenden Parameter können gesetzt werden.</p>
 <dl>
     <dt>minzoom</dt>
     <dd>Definiert, wie weit herausgezoomt werden kann. Erlaubt sind positive Ganzzahlen.</dd>

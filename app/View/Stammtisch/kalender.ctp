@@ -39,6 +39,7 @@
                     ,center: "title"
                     ,right: "month,basicWeek,basicDay"
                 }
+                ,defaultView: "'.$defaultview.'"
                 ,dayNamesShort: ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"]
                 ,dayNames: ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"]
                 ,monthNamesShort: ["Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"]
@@ -52,6 +53,16 @@
                     ,month: "Monat"
                     ,week: "Woche"
                     ,day: "Tag"
+                }
+                ,columnFormat: {
+                    month: "ddd"
+                    ,week: "ddd, dd.MM."
+                    ,day: "dddd"
+                }
+                ,titleFormat: {
+                    month: "MMMM yyyy"
+                    ,week: "dd. [MMM][ yyyy]{ - dd. MMM yyyy}"
+                    ,day: "dd. MMMM yyyy"
                 }
                 ,events: [
     ';

@@ -117,4 +117,76 @@ class AppController extends Controller{
         
         return $retval;
     }
+    
+    /**
+     * Gets a string from named params
+     * @param string $param
+     * @param array $allowedParams keys => allowed parameter input; values => return value if the key matched
+     * @param string $default
+     */
+    protected function sanitizeStringParam($param, $allowedParams, $default = ''){
+        $retval = $default;
+        if(!empty($this->params['named'][$param])
+            && Validation::alphaNumeric($this->params['named'][$param])
+            && isset($allowedParams[$this->params['named'][$param]])
+        ){
+            $retval = $allowedParams[$this->params['named'][$param]];
+        }
+        return $retval;
+    }
+    
+    /**
+     * Gets an integer from named params
+     * @param string $param
+     * @param int $min
+     * @param int $max
+     * @param int $default
+     * @return The sanitized param as int or the default.
+     */
+    protected function sanitizeIntParam($param, $min, $max, $default = 0){
+        $retval = $default;
+        if(!empty($this->params['named'][$param])
+                && ((int)$this->params['named'][$param]) <= $max
+                && ((int)$this->params['named'][$param]) >= $min
+        ){
+            $retval = (int)$this->params['named'][$param];
+        }
+        return $retval;
+    }
+    
+    /**
+     * Gets a float from named params
+     * @param string $param
+     * @param float $min
+     * @param float $max
+     * @param float $default
+     * @return The sanitized param as float or the default.
+     */
+    protected function sanitizeFloatParam($param, $min, $max, $default = 0){
+        $retval = $default;
+        if(!empty($this->params['named'][$param])
+                && ((float)$this->params['named'][$param]) <= $max
+                && ((float)$this->params['named'][$param]) >= $min
+        ){
+            $retval = (float)$this->params['named'][$param];
+        }
+        return $retval;
+    }
+    
+    /**
+     * Gets a boolean from named params
+     * @param string $param
+     * @param string $default Should be 'true' or 'false'
+     * @return string The sanitized param as string ('true' or 'false')
+     *     or the default
+     */
+    protected function sanitizeBooleanParam($param, $default = 'true'){
+        $retval = $default;
+        if(isset($this->params['named'][$param])
+                && $this->params['named'][$param] === '0'
+        ){
+            $retval = 'false';
+        }
+        return $retval;
+    }
 }
