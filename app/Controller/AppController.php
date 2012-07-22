@@ -29,6 +29,7 @@
  */
 
 App::uses('Controller', 'Controller');
+App::uses('Validation', 'Utility');
 
 /**
  * Application Controller
