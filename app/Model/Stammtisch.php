@@ -37,7 +37,7 @@ class Stammtisch extends AppModel{
         if(is_writable($destination)
             && (
                 time() - filemtime($destination) > $maxage
-                || filesize($destination) === 0
+                || filesize($destination) < 50
                 || defined('CRON_DISPATCHER')
             )
         ){
