@@ -8,13 +8,11 @@
  */
 ?><?php
 if(!empty($event)){
-    header('Content-type: text/calendar; charset=utf-8');
-    header('Content-Disposition: attachment; filename="'.$event['Stammtisch']['data']['plz'].'.ics"');
     echo "BEGIN:VCALENDAR\n";
     echo "METHOD:PUBLISH\n";
-    echo "UID:". md5(uniqid(mt_rand(), true)) ."@api.piratenpartei-bw.de";
+    echo "UID:". md5(uniqid(mt_rand(), true)) ."@api.piratenpartei-bw.de\n";
     echo "VERSION:2.0\n";
-    echo "PRODID:-//api.piratenpartei-bw.de//EN\n";
+    echo "PRODID:-//api.piratenpartei-bw.de//DE\n";
     echo "BEGIN:VEVENT\n";
     echo "DTSTAMP:" . gmdate('Ymd').'T'. gmdate('His') . "Z\n";
     echo "DTSTART:".gmdate('Ymd', $event['Stammtisch']["timestamp"])."T".gmdate('His', $event['Stammtisch']["timestamp"])."Z\n";

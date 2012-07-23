@@ -90,14 +90,37 @@ class StammtischController extends AppController{
      * @param int $id The ID of the appointment to render.
      */
     public function termin_ics($id = 0){
+        $this->layout = 'ajax';
+        $this->response->charset('utf-8');
+        $this->response->disableCache();
+        $this->response->download('termin.ics');
+        $this->response->mustRevalidate();
+        $this->response->type('ics');
         $event = $this->Stammtisch->findById($id);
         if(!empty($event)){
-            $this->layout = 'ajax';
             $event['Stammtisch']['timestamp'] = strtotime($event['Stammtisch']['date']);
-            $this->set('event', $event);
-        }else{
-            $this->Session->setFlash('Es wurde leider kein Kalendereintrag gefunden: :-(');
         }
+        $this->set('event', $event);
+    }
+    
+    /**
+     * Renders an iCal file for stammtisch appointments.
+     */
+    public function webcal(){
+        $this->layout = 'ajax';
+        $this->layout = 'ajax';
+        $this->response->charset('utf-8');
+        $this->response->disableCache();
+        $this->response->download('termin.ics');
+        $this->response->mustRevalidate();
+        $this->response->type('ics');
+        $events = $this->Stammtisch->find('all');
+        if(!empty($events)){
+            foreach ($events as $index => $event){
+                $events[$index]['Stammtisch']['timestamp'] = strtotime($event['Stammtisch']['date']);
+            }
+        }
+        $this->set('events', $events);
     }
     
     /**
