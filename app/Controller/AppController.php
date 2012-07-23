@@ -50,9 +50,6 @@ class AppController extends Controller{
         // set the base url used in the layout
         $baseUrl = Configure::read('System.baseurl');
         $this->set('baseurl', $baseUrl);
-        
-        // stop telling which PHP version we are using
-        header_remove('X-Powered-By');
     }
     
     // ############## CONVENIENCE METHODS ################
