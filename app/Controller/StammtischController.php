@@ -108,18 +108,13 @@ class StammtischController extends AppController{
      */
     public function webcal(){
         $this->layout = 'ajax';
-        $this->layout = 'ajax';
         $this->response->charset('utf-8');
         $this->response->disableCache();
         $this->response->download('termin.ics');
         $this->response->mustRevalidate();
         $this->response->type('ics');
-        $events = $this->Stammtisch->find('all');
-        if(!empty($events)){
-            foreach ($events as $index => $event){
-                $events[$index]['Stammtisch']['timestamp'] = strtotime($event['Stammtisch']['date']);
-            }
-        }
+        $this->Stammtisch->updateStammtische();
+        $events = $this->fetchAppointments();
         $this->set('events', $events);
     }
     
@@ -127,25 +122,10 @@ class StammtischController extends AppController{
      * Displays a calendar with all stammtisches
      */
     public function kalender(){
-        $events = $this->Stammtisch->find(
-            'all'
-            ,array(
-                'conditions' => array(
-                    array(
-                        'not' => array(
-                            'Stammtisch.date' => null
-                     )
-                    )
-                )
-                ,'recursive' => -1
-            )
-        );
-        if(!empty($events)){
-            $this->layout = 'barebone';
-            $this->set('events', $events);
-        }else{
-            $this->Session->setFlash('Es wurden leider keine Kalendereinträge gefunden: :-(');
-        }
+        $this->layout = 'barebone';
+        $this->Stammtisch->updateStammtische();
+        $events = $this->fetchAppointments();
+        $this->set('events', $events);
         
         $defaultView = $this->sanitizeStringParam(
             'defaultview'
@@ -157,5 +137,54 @@ class StammtischController extends AppController{
             ,'month'
         );
         $this->set('defaultview', $defaultView);
+    }
+    
+    /**
+     * Loads stammtisch appointments and filters them using the named
+     * param plz.
+     * @return array found appointments
+     */
+    protected function fetchAppointments(){
+        $conditions = array(
+            array(
+                'not' => array(
+                    'Stammtisch.date' => null
+             )
+            )
+        );
+        
+        // add plz OR conditions in case they are valid
+        $postcodeOR = array();
+        if(!empty($this->params['named']['plz'])
+            && Validation::custom(
+                $this->params['named']['plz']
+                ,'/^[0-9]{1,5}(,[0-9]{1,5}){0,20}$/'
+            )
+        ){
+            $postcodes = split(',', $this->params['named']['plz']);
+            foreach($postcodes as $postcode){
+                if(strlen($postcode) < 5){
+                    $postcode .= '%';
+                }
+                $postcodeOR['or'][] = array(
+                    'Stammtisch.plz LIKE' => $postcode
+                );
+            }
+        }
+        $conditions[] = $postcodeOR;
+        
+        // do the search
+        $events = $this->Stammtisch->find(
+            'all'
+            ,array(
+                'conditions' => $conditions
+                ,'recursive' => -1
+            )
+        );
+        
+        foreach ($events as $index => $event){
+            $events[$index]['Stammtisch']['timestamp'] = strtotime($event['Stammtisch']['date']);
+        }
+        return $events;
     }
 }

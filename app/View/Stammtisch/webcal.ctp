@@ -8,8 +8,6 @@
  */
 ?><?php
 if(!empty($events)){
-//    header('Content-type: text/calendar; charset=utf-8');
-//    header('Content-Disposition: inline; filename="ical.ics"');
     echo "BEGIN:VCALENDAR\n";
     echo "METHOD:PUBLISH\n";
     echo "UID:". md5(uniqid(mt_rand(), true)) ."@api.piratenpartei-bw.de\n";
@@ -23,9 +21,11 @@ if(!empty($events)){
         echo "DTSTART:".gmdate('Ymd', $event['Stammtisch']["timestamp"])."T".gmdate('His', $event['Stammtisch']["timestamp"])."Z\n";
         echo "DTEND:".gmdate('Ymd', $event['Stammtisch']["timestamp"])."T".gmdate('His', $event['Stammtisch']["timestamp"])."Z\n";
         echo "SUMMARY:".$event['Stammtisch']['data']['typ'].' '.$event['Stammtisch']['data']['ort']."\n";
+        echo "LOCATION:".$event['Stammtisch']['data']['strasse']." ".$event['Stammtisch']['data']['plz']." ".$event['Stammtisch']['data']['ort']."\n";
         echo "URL:".$event['Stammtisch']['url']."\n";
+        echo "DESCRIPTION:".$event['Stammtisch']['url']."\n";
         echo "UID:".md5(json_encode($event))."\n";
-        echo "CATEGORIES:Pirat\n";
+        echo "CATEGORIES:Piraten\n";
         echo "END:VEVENT\n";
     }
     

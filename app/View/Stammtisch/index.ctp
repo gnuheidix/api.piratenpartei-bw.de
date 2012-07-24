@@ -14,12 +14,36 @@
 <dl>
     <dt>defaultview</dt>
     <dd>Definiert, welche Ansicht voreingestellt ist. Erlaubt sind die Werte month, week und day.</dd>
+    <dt>plz</dt>
+    <dd>Definiert, welche Postleitzahlenbereiche im Ergebnis vorkommen sollen. Bis zu 21 mit Komma getrennte Postleitzahlen(bereiche) können dabei angegeben werden.</dd>
 </dl>
 <h4>Beispieleinbindung</h4>
 <ul>
     <li><a href="stammtisch/kalender">/stammtisch/kalender</a></li>
 </ul>
 <iframe class="karte" src="stammtisch/kalender"></iframe>
+<h4>Beispieleinbindung mit Werten für die PLZ-Bereiche 78, 70 und 6 in der Wochenansicht</h4>
+<ul>
+    <li><a href="stammtisch/kalender/plz:78,70,6/defaultview:week">/stammtisch/kalender/plz:78,70,6/defaultview:week</a></li>
+</ul>
+<iframe class="karte" src="stammtisch/kalender/plz:78,70,6/defaultview:week"></iframe>
+
+
+<h2>Webcal</h2>
+<p>Diese Funktion erstellt eine maschinenauslesbare Zusammenfassung aller zur Zeit verfügbaren Stammtischtermine.</p>
+<h3>Parameter</h3>
+<p>Die folgenden Parameter können gesetzt werden.</p>
+<dl>
+    <dt>plz</dt>
+    <dd>Definiert, welche Postleitzahlenbereiche im Ergebnis vorkommen sollen. Bis zu 21 mit Komma getrennte Postleitzahlen(bereiche) können dabei angegeben werden.</dd>
+</dl>
+<h4>Beispieleinbindung mit Werten für den KV Konstanz</h4>
+<img src="<?php echo $baseurl; ?>img/stammtisch/webcal-evolution.jpg"/>
+<ul>
+    <li><a href="webcal://<?php echo $_SERVER['SERVER_NAME'].$baseurl; ?>stammtisch/webcal/plz:784,782,783">webcal://<?php echo $_SERVER['SERVER_NAME'].$baseurl; ?>stammtisch/webcal/plz:784,782,783</a></li>
+</ul>
+
+
 <h2>Karte</h2>
 <p>Diese Funktion stellt alle zur Zeit Stammtischtermine in einer OpenStreetMap-Karte dar. Beim Klick auf einen Stammtischpin werden Detailinformationen dargestellt.</p>
 <h3>Parameter</h3>

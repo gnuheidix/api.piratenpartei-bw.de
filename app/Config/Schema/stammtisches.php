@@ -30,7 +30,8 @@ class StammtischesSchema extends CakeSchema {
     
     public $stammtisches = array(
             'id' => array('type'=>'integer', 'null' => false, 'length' => 10, 'key' => 'primary'),
-            'date' => array('type'=>'datetime', 'null' => true),
+            'plz' => array('type'=>'string', 'length' => 5, 'null' => true),
+            'date' => array('type'=>'datetime', 'null' => true, 'default' => null),
             'data' => array('type'=>'text', 'null' => false),
             'created' => array('type'=>'datetime', 'null' => false),
             'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1))

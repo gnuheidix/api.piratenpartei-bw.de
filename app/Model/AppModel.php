@@ -65,26 +65,27 @@ class AppModel extends Model {
      * see: http://dev.mysql.com/doc/refman/5.1/de/miscellaneous-functions.html
      * @param string $name The name of the lock to aquire.
      * @return 0 if the lock couldn't be aquired, 1 otherwise.
-     */
+     *
     public function lock($name = 'SPERRE'){
         $result = $this->query('SELECT GET_LOCK ("'.$name.'", 7)');
         return $result[0][0][key($result[0][0])];
     }
-    
+    */
     /**
      * Checks whether the lock is free or not.
      * @param string $name The name of the lock to check.
-     */
+     *
     public function isFreeLock($name = 'SPERRE'){
         $result = $this->query('SELECT IS_FREE_LOCK("'.$name.'")');
         return $result[0][0][key($result[0][0])];
     }
-    
+    */
     /**
      * Releases the lock so that other processes can aquire it.
      * @param string $name The name of the lock to release.
-     */
+     *
     public function unlock($name = 'SPERRE'){
         $dbo = $this->query('SELECT RELEASE_LOCK("'.$name.'")');
     }
+    */
 }

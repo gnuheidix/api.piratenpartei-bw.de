@@ -82,6 +82,8 @@ class WikiPage extends AppModel {
             $data['WikiPage']['requested'] = date('Y-m-d H:i:s',time());
             if($this->save($data)){
                 $data['WikiPage']['id'] = $this->id;
+                /*
+                // deactivated due to possible race condition
                 if(Configure::read('WikiImage.enabled')){
                     App::import('Model', 'WikiImage');
                     $wikiImageObj = new WikiImage();
@@ -98,6 +100,7 @@ class WikiPage extends AppModel {
                         $this->unlock(md5($title));
                     }
                 }
+                */
                 $retval = $data;
             }
         }else{

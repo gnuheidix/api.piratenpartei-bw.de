@@ -135,27 +135,32 @@ class Stammtisch extends AppModel{
                 // parse date, create a correct timestamp, geocode address if possible
                 $dataset = $this->sanitizeDataset($dataset);
                 
-                // extract render date timestamp if possible
-                $dateTime = strtotime($dataset['datum'].' '.$dataset['zeit']);
-                
-                // render data array to be written to database
-                $data = array();
-                if($dateTime){
-                    $dateField = date('Y-m-d H:i:s', $dateTime);
-                    $data['Stammtisch']['date'] = $dateField;
-                    $dataset['termin'] = date('d.m.Y - H:i', $dateTime);
-                }
-                $data['Stammtisch']['data'] = json_encode($dataset);
-                
-                // update data array with sanitized data which will be written to the file system
-                $parsedData[$index] = $dataset;
-                
-                // write sanitized data to database
-                $data = $this->create($data);
-                if($this->save($data)){
-                    $parsedData[$index]['id'] = $this->id;
-                }else{
-                    unset($parsedData[$index]);
+                if(!empty($dataset)){
+                    // extract render date timestamp if possible
+                    $dateTime = strtotime($dataset['datum'].' '.$dataset['zeit']);
+                    
+                    // render data array to be written to database
+                    $data = array();
+                    if($dateTime){
+                        $dateField = date('Y-m-d H:i:s', $dateTime);
+                        $data['Stammtisch']['date'] = $dateField;
+                        $dataset['termin'] = date('d.m.Y - H:i', $dateTime);
+                    }else{
+                        $data['Stammtisch']['date'] = null;
+                    }
+                    $data['Stammtisch']['plz'] = $dataset['plz'];
+                    $data['Stammtisch']['data'] = json_encode($dataset);
+                    
+                    // update data array with sanitized data which will be written to the file system
+                    $parsedData[$index] = $dataset;
+                    
+                    // write sanitized data to database
+                    $data = $this->create($data);
+                    if($this->save($data)){
+                        $parsedData[$index]['id'] = $this->id;
+                    }else{
+                        unset($parsedData[$index]);
+                    }
                 }
             }
             
@@ -171,7 +176,7 @@ class Stammtisch extends AppModel{
     /**
      * Santizes a parsed dataset from the wiki.
      * @param array $dataset The dataset to process.
-     * @return array The sanitized dataset.
+     * @return array The sanitized dataset or false.
      */
     protected function sanitizeDataset($dataset){
         if(!empty($dataset['datum'])
@@ -187,9 +192,17 @@ class Stammtisch extends AppModel{
             ){
                 $dataset['zeit'] = $timeMatches[0];
             }else{
-                $dataset['zeit'] = '00:00';
+                return false;
             }
             
+            // sanitize post code
+            if(!empty($dataset['plz'])
+                && Validation::custom(trim($dataset['plz']), '/^[0-9]{1,5}$/i')
+            ){
+                $dataset['plz'] = trim($dataset['plz']);
+            }else{
+                $dataset['plz'] = '';
+            }
             // retrieve geo coordinates from external webservice if needed
             if(empty($dataset['lat'])
                 && empty($dataset['lon'])
@@ -206,6 +219,8 @@ class Stammtisch extends AppModel{
                     $dataset['lon'] = $coordinates['GeoCoordinate']['lon'];
                 }
             }
+        }else{
+            $dataset = false;
         }
         return $dataset;
     }

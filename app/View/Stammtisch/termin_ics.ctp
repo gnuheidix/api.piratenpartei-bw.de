@@ -18,7 +18,11 @@ if(!empty($event)){
     echo "DTSTART:".gmdate('Ymd', $event['Stammtisch']["timestamp"])."T".gmdate('His', $event['Stammtisch']["timestamp"])."Z\n";
     echo "DTEND:".gmdate('Ymd', $event['Stammtisch']["timestamp"])."T".gmdate('His', $event['Stammtisch']["timestamp"])."Z\n";
     echo "SUMMARY:".$event['Stammtisch']['data']['typ'].' '.$event['Stammtisch']['data']['ort']."\n";
+    echo "LOCATION:".$event['Stammtisch']['data']['strasse']." ".$event['Stammtisch']['data']['plz']." ".$event['Stammtisch']['data']['ort']."\n";
+    echo "DESCRIPTION:".$event['Stammtisch']['url']."\n";
+    echo "CATEGORIES:Piraten\n";
     echo "URL:".$event['Stammtisch']['url']."\n";
+    echo "UID:".md5(json_encode($event))."\n";
     echo "END:VEVENT\n";
     echo "END:VCALENDAR";
 }
