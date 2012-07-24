@@ -194,7 +194,7 @@ class Stammtisch extends AppModel{
             }else{
                 return false;
             }
-            
+/*            
             // sanitize post code
             if(!empty($dataset['plz'])
                 && Validation::custom(trim($dataset['plz']), '/^[0-9]{1,5}$/i')
@@ -203,6 +203,7 @@ class Stammtisch extends AppModel{
             }else{
                 $dataset['plz'] = '';
             }
+*/
             // retrieve geo coordinates from external webservice if needed
             if(empty($dataset['lat'])
                 && empty($dataset['lon'])
