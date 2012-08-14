@@ -19,14 +19,14 @@
 </dl>
 <h4>Beispieleinbindung</h4>
 <ul>
-    <li><a href="stammtisch/kalender">/stammtisch/kalender</a></li>
+    <li><a href="<?php echo $baseurl; ?>stammtisch/kalender">/stammtisch/kalender</a></li>
 </ul>
-<iframe class="karte" src="stammtisch/kalender"></iframe>
+<iframe class="karte" src="<?php echo $baseurl; ?>stammtisch/kalender"></iframe>
 <h4>Beispieleinbindung mit Werten für die PLZ-Bereiche 78, 70 und 6 in der Wochenansicht</h4>
 <ul>
-    <li><a href="stammtisch/kalender/plz:78,70,6/defaultview:week">/stammtisch/kalender/plz:78,70,6/defaultview:week</a></li>
+    <li><a href="<?php echo $baseurl; ?>stammtisch/kalender/plz:78,70,6/defaultview:week">/stammtisch/kalender/plz:78,70,6/defaultview:week</a></li>
 </ul>
-<iframe class="karte" src="stammtisch/kalender/plz:78,70,6/defaultview:week"></iframe>
+<iframe class="karte" src="<?php echo $baseurl; ?>stammtisch/kalender/plz:78,70,6/defaultview:week"></iframe>
 
 
 <h2>Webcal</h2>
@@ -40,7 +40,7 @@
 <h4>Beispieleinbindung mit Werten für den KV Konstanz</h4>
 <img src="<?php echo $baseurl; ?>img/stammtisch/webcal-evolution.jpg"/>
 <ul>
-    <li><a href="webcal://<?php echo $_SERVER['SERVER_NAME'].$baseurl; ?>stammtisch/webcal/plz:784,782,783">webcal://<?php echo $_SERVER['SERVER_NAME'].$baseurl; ?>stammtisch/webcal/plz:784,782,783</a></li>
+    <li><a href="webcal://<?php echo env('SERVER_NAME').$baseurl; ?>stammtisch/webcal/plz:784,782,783">webcal://<?php echo env('SERVER_NAME').$baseurl; ?>stammtisch/webcal/plz:784,782,783</a></li>
 </ul>
 
 
@@ -66,11 +66,11 @@
 </dl>
 <h4>Beispieleinbindung mit Standardwerten</h4>
 <ul>
-    <li><a href="stammtisch/karte">/stammtisch/karte</a></li>
+    <li><a href="<?php echo $baseurl; ?>stammtisch/karte">/stammtisch/karte</a></li>
 </ul>
-<iframe class="karte" src="stammtisch/karte"></iframe>
+<iframe class="karte" src="<?php echo $baseurl; ?>stammtisch/karte"></iframe>
 <h4>Beispieleinbindung mit angepassten Werten für den KV Konstanz</h4>
 <ul>
-    <li><a href="stammtisch/karte/lat:47.745/lon:9.012/scrollzoom:0/defaultzoom:11">/stammtisch/karte/lat:47.745/lon:9.012/scrollzoom:0/defaultzoom:11</a></li>
+    <li><a href="<?php echo $baseurl; ?>stammtisch/karte/lat:47.745/lon:9.012/scrollzoom:0/defaultzoom:11">/stammtisch/karte/lat:47.745/lon:9.012/scrollzoom:0/defaultzoom:11</a></li>
 </ul>
-<iframe class="karte" src="stammtisch/karte/lat:47.745/lon:9.012/scrollzoom:0/defaultzoom:11"></iframe>
+<iframe class="karte" src="<?php echo $baseurl; ?>stammtisch/karte/lat:47.745/lon:9.012/scrollzoom:0/defaultzoom:11"></iframe>

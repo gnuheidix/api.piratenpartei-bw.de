@@ -29,7 +29,7 @@
 <head>
     <?php echo $this->Html->charset(); ?>
     <title>
-        <?php echo $title_for_layout.' - '.$_SERVER['SERVER_NAME']; ?>
+        <?php echo $title_for_layout.' - '.env('SERVER_NAME'); ?>
     </title>
     <?php
         echo $this->Html->meta('icon');
@@ -43,7 +43,7 @@
 <body>
     <div id="container">
         <div id="header">
-            <h1><?php echo $title_for_layout; ?> - <a href="<?php echo $baseurl; ?>"><?php echo $_SERVER['SERVER_NAME']; ?></a></h1>
+            <h1><?php echo $title_for_layout; ?> - <a href="<?php echo $baseurl; ?>"><?php echo env('SERVER_NAME'); ?></a></h1>
         </div>
         <div id="content">
 
