@@ -246,20 +246,21 @@ class Stammtisch extends AppModel{
      * @return string The url of the href attribute.
      */
     protected function extractHref($html){
-        $hrefIndicator = 'href="';
-        $hrefStart = strpos(
-            $html
-            ,$hrefIndicator
-        );
-        $retval = substr(
-            $html
-            ,$hrefStart + strlen($hrefIndicator)
-            ,strpos(
-                $html
-                ,'"'
-                ,$hrefStart + strlen($hrefIndicator)
-            ) - $hrefStart - strlen($hrefIndicator)
-        );
+        $retval = '';
+        
+        try{
+            $dom = new DOMDocument();
+            $dom->loadHTML($html);
+            $nodes = $dom->getElementsByTagName('a');
+            if($nodes->length > 0
+                && $nodes->item(0)->hasAttribute('href')
+            ){
+                $retval = $nodes->item(0)->getAttribute('href');
+            }
+        }catch (exception $e){
+            
+        }
+        
         return $retval;
     }
 }
