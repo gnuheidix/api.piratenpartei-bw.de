@@ -79,7 +79,6 @@ class WikiPage extends AppModel {
             $data['WikiPage']['title'] = $title;
             $data['WikiPage']['content'] = $content;
             $data['WikiPage']['updatedat'] = date('Y-m-d H:i:s', time());
-            $data['WikiPage']['requested'] = date('Y-m-d H:i:s',time());
             if($this->save($data)){
                 $data['WikiPage']['id'] = $this->id;
                 /*
