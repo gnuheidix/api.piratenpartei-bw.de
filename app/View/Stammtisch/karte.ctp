@@ -52,6 +52,13 @@ var bawue = new L.Polygon(
         ,smoothFactor:5
     }
 );
+
+var MyIcon = L.Icon.extend({
+    iconUrl: '".$baseurl."img/stammtisch/pin.png',
+    iconSize: new L.Point(57, 34),
+    iconAnchor: new L.Point(0, 33),
+    popupAnchor: new L.Point(18, -33)
+});
     ");
     echo $this->Html->script(array('stammtisch/loadmap'));
 ?>

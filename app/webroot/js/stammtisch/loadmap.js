@@ -6,13 +6,6 @@
  * @copyright Copyright (c) 2012 Thomas Heidrich and other authors
  */
 
-var MyIcon = L.Icon.extend({
-    iconUrl: '/img/stammtisch/pin.png',
-    iconSize: new L.Point(57, 34),
-    iconAnchor: new L.Point(0, 33),
-    popupAnchor: new L.Point(18, -33)
-});
-
 map.addLayer(cloudmade);
 map.addLayer(bawue);
 
