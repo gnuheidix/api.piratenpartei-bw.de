@@ -87,19 +87,29 @@ class CronController extends AppController{
                 )
             );
             
+			$maximumage = Configure::read('WikiPage.maximumage');
+
             // update pages and their elements
             foreach($wikiPageDatasets as $wikiPageDataset){
-                $this->message($flag, 'Updating wiki page '.$wikiPageDataset['WikiPage']['title']."\n");
-                $updatedWikiPageDataset = $wikiPageObject->updateWikiPage(
-                    $wikiPageDataset['WikiPage']['title']
-                );
-                foreach($wikiPageDataset['WikiElement'] as $wikiElementDataset){
-                    $this->message($flag, 'Updating wiki element '.$wikiPageDataset['WikiPage']['title']."\n");
-                    $wikiElementObject->updateWikiElement(
-                        $updatedWikiPageDataset
-                        ,$wikiElementDataset['element_id']
-                    );
-                }
+				$distance = time() - idate('U', strtotime($wikiPageDataset['WikiPage']['requested']));
+
+				// If last request is not farther in the past than the maximum distance
+				if ( $distance < $maximumage ) {
+					$this->message($flag, 'Updating wiki page '.$wikiPageDataset['WikiPage']['title']."\n");
+					$updatedWikiPageDataset = $wikiPageObject->updateWikiPage(
+						$wikiPageDataset['WikiPage']['title']
+					);
+					foreach($wikiPageDataset['WikiElement'] as $wikiElementDataset){
+						$this->message($flag, 'Updating wiki element '.$wikiPageDataset['WikiPage']['title']."\n");
+						$wikiElementObject->updateWikiElement(
+							$updatedWikiPageDataset
+							,$wikiElementDataset['element_id']
+						);
+					}
+				}
+				else {
+					$wikiPageObject->delete($wikiPageDataset['WikiPage']['id']);
+				}
             }
             
             $this->message($flag, "Updating Stammmtische\n");
