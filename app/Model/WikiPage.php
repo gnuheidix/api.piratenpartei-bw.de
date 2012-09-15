@@ -61,7 +61,7 @@ class WikiPage extends AppModel {
         // request page from wiki
         $content = $this->retrievePageContent($title);
         $retval = false;
-        if($content !== FALSE){
+        if($content !== false){
             
             // replace all relative source links
             $content = str_replace(
@@ -78,6 +78,9 @@ class WikiPage extends AppModel {
             $data = $this->findByTitle($title);
             $data['WikiPage']['title'] = $title;
             $data['WikiPage']['content'] = $content;
+            if(empty($data['WikiPage']['requested'])){
+                $data['WikiPage']['requested'] = date('Y-m-d H:i:s', time());
+            }
             $data['WikiPage']['updatedat'] = date('Y-m-d H:i:s', time());
             if($this->save($data)){
                 $data['WikiPage']['id'] = $this->id;

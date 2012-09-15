@@ -194,16 +194,18 @@ class Stammtisch extends AppModel{
      * @param array $datasets Datasets to save
      */
     protected function saveToJSON($datasets){
-        // modify hyperlinks in order to open in parent frame
-        foreach($datasets as $index => $dataset){
-            $datasets[$index] = preg_replace('/<(a .+?)>/', '<$1 target="_parent" >', $dataset);
-        }
-        
-        // write data to file system if possible
-        $file = fopen($this->jsonFilePath, 'w');
-        if($file !== FALSE){
-            fwrite($file, "var stammtische = eval(".json_encode($datasets).");");
-            fclose($file);
+        if(!empty($datasets)){
+            // modify hyperlinks in order to open in parent frame
+            foreach($datasets as $index => $dataset){
+                $datasets[$index] = preg_replace('/<(a .+?)>/', '<$1 target="_parent" >', $dataset);
+            }
+            
+            // write data to file system if possible
+            $file = fopen($this->jsonFilePath, 'w');
+            if($file !== FALSE){
+                fwrite($file, "var stammtische = eval(".json_encode($datasets).");");
+                fclose($file);
+            }
         }
     }
     
