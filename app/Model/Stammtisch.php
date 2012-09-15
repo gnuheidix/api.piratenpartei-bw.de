@@ -19,6 +19,11 @@ class Stammtisch extends AppModel{
     public $name = 'Stammtisch';
     
     /**
+     * @var string The file path where to save the JSON export.
+     */
+    protected $jsonFilePath;
+    
+    /**
      * Prevent having duplicate entries in database.
      * @var array Validation rules
      */
@@ -26,23 +31,31 @@ class Stammtisch extends AppModel{
         'data' => 'isUnique'
     );
     
+    /**
+     * @see AppModel
+     */
+    public function __construct($id = false, $table = null, $ds = null){
+        parent::__construct($id, $table, $ds);
+        
+        $this->jsonFilePath = Configure::read('Stammtisch.destination');
+    }
+    
     /** 
      * Updates all Stammtisch locations into a file in case the
      * current data in that file is old enough. 
      */ 
     public function updateStammtische(){
-        $destination = Configure::read('Stammtisch.destination');
         $maxage = Configure::read('System.autoupdateage');
         // check age and length of generated file
-        if(is_writable($destination)
+        if(is_writable($this->jsonFilePath)
             && (
-                time() - filemtime($destination) > $maxage
-                || filesize($destination) < 50
+                time() - filemtime($this->jsonFilePath) > $maxage
+                || filesize($this->jsonFilePath) < 50
                 || defined('CRON_DISPATCHER')
             )
         ){
             // try to prevent other processes to update
-            touch($destination);
+            touch($this->jsonFilePath);
             
             // initialize from configuration
             $pageTitle = Configure::read('Stammtisch.sourcepagetitle');
@@ -104,19 +117,28 @@ class Stammtisch extends AppModel{
                      
                     $html = substr($html, $endBlock + strlen($rowEndDestination)); 
                 }else{ 
-                    $html = FALSE; 
+                    $html = false;
                 } 
             }
             
-            $this->saveParsedDatasets($parsedData, $destination);
+            $this->saveDatasets($parsedData);
         }
+    }
+    
+    /**
+     * Triggers save procedures for parsed datasets
+     * @param array $datasets The datasets to save.
+     */
+    protected function saveDatasets($datasets){
+        $datasets = $this->geocodeAndSaveToDatabase($datasets);
+        $this->saveToJSON($datasets);
     }
         
     /**
      * Writes a number of datasets to the database.
      * @param array $parsedData The datasets to save.
      */
-    protected function saveParsedDatasets($parsedData, $destination){
+    protected function geocodeAndSaveToDatabase($parsedData){
         if(is_array($parsedData)
             && !empty($parsedData)
         ){
@@ -129,11 +151,10 @@ class Stammtisch extends AppModel{
               ,true
            );
             
-            $baseWikiUrl = Configure::read('WikiPage.baseimageurl');
             // add new database entries
             foreach($parsedData as $index => $dataset){
                 // parse date, create a correct timestamp, geocode address if possible
-                $dataset = $this->sanitizeDataset($dataset);
+                $dataset = $this->geocodeDataset($dataset);
                 
                 if(!empty($dataset)){
                     // extract render date timestamp if possible
@@ -164,21 +185,34 @@ class Stammtisch extends AppModel{
                 }
             }
             
-            // write data to file system if possible
-            $file = fopen($destination, 'w');
-            if($file !== FALSE){
-                fwrite($file, "var stammtische = eval(".json_encode($parsedData).");");
-                fclose($file);
-            }
+            return $parsedData;
         }
     }
     
     /**
-     * Santizes a parsed dataset from the wiki.
+     * Writes datasets to a JSON file.
+     * @param array $datasets Datasets to save
+     */
+    protected function saveToJSON($datasets){
+        // modify hyperlinks in order to open in parent frame
+        foreach($datasets as $index => $dataset){
+            $datasets[$index] = preg_replace('/<(a .+?)>/', '<$1 target="_parent" >', $dataset);
+        }
+        
+        // write data to file system if possible
+        $file = fopen($this->jsonFilePath, 'w');
+        if($file !== FALSE){
+            fwrite($file, "var stammtische = eval(".json_encode($datasets).");");
+            fclose($file);
+        }
+    }
+    
+    /**
+     * geocodes a parsed dataset from the wiki.
      * @param array $dataset The dataset to process.
      * @return array The sanitized dataset or false.
      */
-    protected function sanitizeDataset($dataset){
+    protected function geocodeDataset($dataset){
         if(!empty($dataset['datum'])
             && !empty($dataset['zeit'])
             && Validation::date($dataset['datum'], 'ymd')
@@ -194,16 +228,7 @@ class Stammtisch extends AppModel{
             }else{
                 return false;
             }
-/*            
-            // sanitize post code
-            if(!empty($dataset['plz'])
-                && Validation::custom(trim($dataset['plz']), '/^[0-9]{1,5}$/i')
-            ){
-                $dataset['plz'] = trim($dataset['plz']);
-            }else{
-                $dataset['plz'] = '';
-            }
-*/
+            
             // retrieve geo coordinates from external webservice if needed
             if(empty($dataset['lat'])
                 && empty($dataset['lon'])
@@ -257,7 +282,7 @@ class Stammtisch extends AppModel{
             ){
                 $retval = $nodes->item(0)->getAttribute('href');
             }
-        }catch (exception $e){
+        }catch(exception $e){
             
         }
         

@@ -64,6 +64,9 @@
                     ,week: "dd. [MMM][ yyyy]{ - dd. MMM yyyy}"
                     ,day: "dd. MMMM yyyy"
                 }
+                ,eventRender: function(event, element) {
+                    element.attr("target", "_parent");
+                }
                 ,events: [
     ';
     

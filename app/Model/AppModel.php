@@ -47,8 +47,7 @@ class AppModel extends Model {
     protected $streamContext;
     
     /**
-     * 
-     * Enter description here ...
+     * @see Model
      */
     public function __construct($id = false, $table = null, $ds = null){
         parent::__construct($id, $table, $ds);
