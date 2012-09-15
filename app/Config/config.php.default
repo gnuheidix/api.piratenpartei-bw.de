@@ -40,6 +40,10 @@ $config['WikiPage'] = array(
      * The URL of the wiki where all relative links can be appended to.
      */
     ,'baseimageurl' => 'http://wiki.piratenpartei.de/'
+	/**
+	 * Maximum passed seconds from last page request until deletion ist triggered
+	 */
+	,'maximumage' => 604800
 );
 
 $config['WikiImage'] = array(
