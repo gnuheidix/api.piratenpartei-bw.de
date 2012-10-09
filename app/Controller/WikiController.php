@@ -80,6 +80,13 @@ class WikiController extends AppController{
     }
     
     /**
+     * Displays some code examples
+     */
+    public function schnipsel(){
+        
+    }
+    
+    /**
      * Delivers a page element extracted from another website.
      * The extracted content will be delivered without the bloaty
      * HTML stuff around it.
