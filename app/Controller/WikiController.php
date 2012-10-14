@@ -80,13 +80,6 @@ class WikiController extends AppController{
     }
     
     /**
-     * Displays some code examples
-     */
-    public function schnipsel(){
-        
-    }
-    
-    /**
      * Delivers a page element extracted from another website.
      * The extracted content will be delivered without the bloaty
      * HTML stuff around it.
@@ -94,6 +87,7 @@ class WikiController extends AppController{
     public function getpagejson(){
         $this->layout = 'ajax';
         $this->view = 'getjson';
+        $elementId = '';
         $content = ':(';
     
         $params = $this->parseGetParamsWithId($this->params);
