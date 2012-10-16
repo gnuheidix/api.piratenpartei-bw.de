@@ -14,6 +14,8 @@ before_script:
   - chmod -R 777 ./app/tmp
   - cp app/Config/core.php.default app/Config/core.php
   - cp app/Config/config.php.default app/Config/config.php
+  - touch app/webroot/js/stammtisch/data.js
+  - chmod 777 app/webroot/js/stammtisch/data.js
   - echo "<?php
     class DATABASE_CONFIG {
     public \$default = array(
