@@ -91,11 +91,13 @@ class StammtischController extends AppController{
      */
     public function termin_ics($id = 0){
         $this->layout = 'ajax';
-        $this->response->charset('utf-8');
-        $this->response->disableCache();
-        $this->response->download('termin.ics');
-        $this->response->mustRevalidate();
-        $this->response->type('ics');
+        if(is_object($this->response)){
+            $this->response->charset('utf-8');
+            $this->response->disableCache();
+            $this->response->download('termin.ics');
+            $this->response->mustRevalidate();
+            $this->response->type('ics');
+        }
         $event = $this->Stammtisch->findById($id);
         if(!empty($event)){
             $event['Stammtisch']['timestamp'] = strtotime($event['Stammtisch']['date']);
@@ -108,11 +110,13 @@ class StammtischController extends AppController{
      */
     public function webcal(){
         $this->layout = 'ajax';
-        $this->response->charset('utf-8');
-        $this->response->disableCache();
-        $this->response->download('termin.ics');
-        $this->response->mustRevalidate();
-        $this->response->type('ics');
+        if(is_object($this->response)){
+            $this->response->charset('utf-8');
+            $this->response->disableCache();
+            $this->response->download('termin.ics');
+            $this->response->mustRevalidate();
+            $this->response->type('ics');
+        }
         $this->Stammtisch->updateStammtische();
         $events = $this->fetchAppointments();
         $this->set('events', $events);

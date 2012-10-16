@@ -24,7 +24,6 @@ class StammtischTestCase extends CakeTestCase {
         // page update from wiki to happen
         Configure::write('System.autoupdateage', 1);
         $this->Stammtisch = ClassRegistry::init('TestStammtisch');
-      //  pr($this->Stammtisch);exit;
     }
     
     /**

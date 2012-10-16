@@ -47,6 +47,7 @@ script:
   - ./app/Console/cake testsuite app Model/WikiElement
   - ./app/Console/cake testsuite app Model/Stammtisch
   - ./app/Console/cake testsuite app Controller/AppController
+  - ./app/Console/cake testsuite app Controller/StammtischController
 
 #notifications:
 # email: false
