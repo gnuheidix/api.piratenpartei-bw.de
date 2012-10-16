@@ -27,7 +27,16 @@ class StammtischControllerTest extends ControllerTestCase{
         // set autoupdate to a low value in order to force the
         // page update from wiki to happen
         Configure::write('System.autoupdateage', 1);
+    }
+    
+    function startTest() {
         $this->controller = new TestStammtischController();
+        $this->controller->constructClasses();
+    }
+     
+    function endTest() {
+        unset($this->controller);
+        ClassRegistry::flush();
     }
     
     public function testFetchAppointments(){
