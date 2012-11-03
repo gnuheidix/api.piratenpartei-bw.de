@@ -29,12 +29,12 @@ class StammtischControllerTest extends ControllerTestCase{
         Configure::write('System.autoupdateage', 1);
     }
     
-    function startTest() {
+    function startTest($method) {
         $this->controller = new TestStammtischController();
         $this->controller->constructClasses();
     }
      
-    function endTest() {
+    function endTest($method) {
         unset($this->controller);
         ClassRegistry::flush();
     }
@@ -48,15 +48,10 @@ class StammtischControllerTest extends ControllerTestCase{
         $this->assertEqual($this->controller->callMethod('fetchAppointments', array()), array());
     }
     
-    public function testCalendarICS(){
-        $this->controller->params['named']['plz'] = '70372';
+    public function testCalendarWebcalAndICS(){
         $this->controller->webcal();
         $this->assertTrue(isset($this->controller->viewVars['events']));
-        $this->assertTrue(!empty($this->controller->viewVars['events']));
-        $this->assertEqual(count($this->controller->viewVars['events']), 1);
-        $this->assertTrue(!empty($this->controller->viewVars['events'][0]['Stammtisch']['plz']));
-        $this->assertTrue(!empty($this->controller->viewVars['events'][0]['Stammtisch']['id']));
-        $this->assertEqual($this->controller->viewVars['events'][0]['Stammtisch']['plz'], '70372');
+        $this->assertTrue(count($this->controller->viewVars['events']) > 0);
         $foundId = $this->controller->viewVars['events'][0]['Stammtisch']['id'];
         $this->controller->viewVars = array();
         
