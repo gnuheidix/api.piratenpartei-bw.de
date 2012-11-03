@@ -47,17 +47,6 @@ class StammtischControllerTest extends ControllerTestCase{
         $this->controller->params['named']['plz'] = '5,a,b,c';
         $this->assertEqual($this->controller->callMethod('fetchAppointments', array()), array());
     }
-    
-    public function testCalendarWebcalAndICS(){
-        $this->controller->webcal();
-        $this->assertTrue(isset($this->controller->viewVars['events']));
-        $this->assertTrue(count($this->controller->viewVars['events']) > 0);
-        $foundId = $this->controller->viewVars['events'][0]['Stammtisch']['id'];
-        $this->controller->viewVars = array();
-        
-        $this->controller->termin_ics($foundId);
-        $this->assertTrue(!empty($this->controller->viewVars['event']['Stammtisch']));
-    }
 }
 
 /**
