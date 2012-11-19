@@ -17,7 +17,7 @@
 if(!empty($wiki_pages)){
     echo '<ul>';
     foreach($wiki_pages as $wikiPage){
-        echo '<li><a href="'.$baseurl.'wiki/getpagehtml/'.$wikiPage['WikiPage']['title'].'" title=" nachgefragt '.$wikiPage['WikiPage']['requested'].' und aktualisiert '.$wikiPage['WikiPage']['updatedat'].'">'.$wikiPage['WikiPage']['title']."</a>";
+        echo '<li><a href="'.$baseurl.'wiki/getpagehtml/'.$wikiPage['WikiPage']['title'].'" title=" nachgefragt '.$wikiPage['WikiPage']['requested'].' und aktualisiert '.$wikiPage['WikiPage']['updatedat'].'">'.$wikiPage['WikiPage']['title'].'</a> - <a href="'.$baseurl.'wiki/reloadpage/'.$wikiPage['WikiPage']['title'].'">erneuern</a>';
         if(!empty($wikiPage['WikiElement'])){
             echo "<ul>";
             foreach($wikiPage['WikiElement'] as $wikiElement){

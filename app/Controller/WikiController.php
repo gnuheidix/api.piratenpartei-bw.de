@@ -188,4 +188,25 @@ class WikiController extends AppController{
         $this->layout = 'barebone';
         $this->view = 'get';
     }
+    
+    /**
+     * Refreshes the cache entry for a certain wiki page.
+     */
+    public function reloadpage(){
+        $title = $this->parseGetParams($this->params);
+        $content = ':(';
+        if(!empty($title)){
+            
+            $wikipage = $this->WikiPage->updateWikiPage($title);
+            if(empty($wikipage['WikiPage'])){
+                $content = 'Die Wikiseite konnte nicht abgerufen werden.';
+            }else{
+                $content = 'Die Wikiseite wurde aktualisiert.';
+            }
+        }else{
+            $content = 'Der Aufruf schlug aufgrund fehlerhafter Eingaben fehl.';
+        }
+        $this->Session->setFlash($content);
+        $this->redirect('statistik');
+    }
 }

@@ -73,6 +73,7 @@ class AppController extends Controller{
             ;
             
             $url = substr($this->params->url, strlen($replaceUrl));
+            $url = str_replace(array('%3C', '%3E'), '', $url);
             $dividerPos = strrpos($url, '/');
             
             $title = substr($url, 0, $dividerPos);
@@ -112,6 +113,7 @@ class AppController extends Controller{
             $url = substr($this->params->url, strlen($replaceUrl));
             
             if(!empty($url)){
+                $url = str_replace(array('%3C', '%3E'), '', $url);
                 $retval = $url;
             }
         }
