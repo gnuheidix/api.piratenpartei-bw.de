@@ -31,8 +31,8 @@ class GeoCoordinateTestCase extends CakeTestCase {
         
         $resultCached = $this->GeoCoordinate->getCoordinates('Auerbacherstraße 1', '08485', 'Lengenfeld');
         $this->assertFalse(empty($resultCached['GeoCoordinate']['created']));
-        $this->assertWithinMargin($result['GeoCoordinate']['lat'], $resultCached['GeoCoordinate']['lat'], 0.000001);
-        $this->assertWithinMargin($result['GeoCoordinate']['lon'], $resultCached['GeoCoordinate']['lon'], 0.000001);
+        $this->assertWithinMargin($result['GeoCoordinate']['lat'], $resultCached['GeoCoordinate']['lat'], 0.00001);
+        $this->assertWithinMargin($result['GeoCoordinate']['lon'], $resultCached['GeoCoordinate']['lon'], 0.00001);
     }
     
     /**
