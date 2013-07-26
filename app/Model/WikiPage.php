@@ -40,7 +40,10 @@ class WikiPage extends AppModel {
         $maxage = Configure::read('System.autoupdateage');
         
         if(   empty($wikipage['WikiPage']['id'])
-           || (time() - strtotime($wikipage['WikiPage']['updatedat']) > $maxage)){
+           || (!empty($wikipage['WikiPage']['updatedat'])
+                && time() - strtotime($wikipage['WikiPage']['updatedat']) > $maxage
+            )
+        ){
             // cache miss or outdated
             $wikipage = $this->updateWikiPage($title);
         }else{
@@ -60,7 +63,7 @@ class WikiPage extends AppModel {
     public function updateWikiPage($title){
         // request page from wiki
         $content = $this->retrievePageContent($title);
-        $retval = false;
+        
         if($content !== false){
             
             // replace all relative source links
@@ -107,7 +110,10 @@ class WikiPage extends AppModel {
             }
         }else{
             // the external source seems to be down, retrieve from database
-            $retval = $this->findByTitle($title);
+            $dbResultset = $this->findByTitle($title);
+            if(empty($dbResultset)){
+                $retval = false;
+            }
         }
         return $retval;
     }
