@@ -30,9 +30,11 @@ class StammtischTestCase extends CakeTestCase {
      * Tests if a the stammtisches are getting updated correctly
      */
     public function testRetrieveStammtische(){
-        $result = $this->Stammtisch->updateStammtische();
+        $this->Stammtisch->updateStammtische();
+        
         $datasetCount = $this->Stammtisch->find('count');
         $this->assertTrue($datasetCount > 0);
+        
         $dataset = $this->Stammtisch->find('first');
         $this->assertTrue(!empty($dataset['Stammtisch']['data']));
     }

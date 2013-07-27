@@ -139,8 +139,8 @@ class Stammtisch extends AppModel{
      * @param array $parsedData The datasets to save.
      */
     protected function geocodeAndSaveToDatabase($parsedData){
-        if(is_array($parsedData)
-            && !empty($parsedData)
+        if(!empty($parsedData)
+            && is_array($parsedData)
         ){
             // delete all datasets having no date
             $this->deleteAll(

@@ -25,16 +25,23 @@ class WikiElementTestCase extends CakeTestCase {
      * WikiElement can be retrieved from Wiki and our own cache?
      */
     public function testGetElement(){
-        $resultLoaded = $this->WikiElement->getElement("Kreisverband_Konstanz", "pkn_intro");
-        $this->assertTrue(!empty($resultLoaded['WikiElement']['content']));
+        $initialResult = $this->WikiElement->getElement("BW:Kreisverband_Konstanz/Termine", "pkn_intro");
+        $this->assertTrue(!empty($initialResult['WikiElement']['content']));
         sleep(2);
-        $resultCached = $this->WikiElement->getElement("Kreisverband_Konstanz", "pkn_intro");
-        $this->assertEqual($resultLoaded['WikiElement']['content'], $resultCached['WikiElement']['content']);
-        $this->assertEqual($resultLoaded['WikiElement']['updatedat'], $resultCached['WikiElement']['updatedat']);
         
-        $this->WikiElement->id = $resultLoaded['WikiElement']['id'];
+        // caching works?
+        $cachedResult = $this->WikiElement->getElement("BW:Kreisverband_Konstanz/Termine", "pkn_intro");
+        $this->assertEqual($initialResult['WikiElement']['content'], $cachedResult['WikiElement']['content']);
+        $this->assertEqual($initialResult['WikiElement']['updatedat'], $cachedResult['WikiElement']['updatedat']);
+        
+        // update request time works?
+        $this->WikiElement->id = $initialResult['WikiElement']['id'];
         $requestedTime = $this->WikiElement->field('requested');
-        $this->assertNotEqual($resultLoaded['WikiElement']['requested'], $requestedTime);
+        $this->assertNotEqual($initialResult['WikiElement']['requested'], $requestedTime);
+        
+        // extract other element possible?
+        $otherElement = $this->WikiElement->getElement("BW:Kreisverband_Konstanz/Termine", "pkn_logo");
+        $this->assertTrue(!empty($otherElement['WikiElement']['content']));
     }
     
     /**
