@@ -40,7 +40,6 @@ before_script:
   - sh app/Console/cake autoschema create GeoCoordinates
   - sh app/Console/cake autoschema create WikiPages
   - sh app/Console/cake autoschema create WikiElements
-  - sh app/Console/cake autoschema create WikiImages
   - sh app/Console/cake autoschema create Stammtisches
 
 script:
