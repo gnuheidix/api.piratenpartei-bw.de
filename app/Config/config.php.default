@@ -47,17 +47,6 @@ $config['WikiPage'] = array(
     ,'maximumage' => 604800
 );
 
-$config['WikiImage'] = array(
-        /**
-         * The directory where to store cached images. (relative to webroot)
-         */
-        'basepath' => '/img/wikiimage/'
-        /**
-         * Determines whether local image caching is active or not.
-         */
-        ,'enabled' => false
-);
-
 $config['Stammtisch'] = array(
     /**
      * The title of the page containing the stammtisch information to extract

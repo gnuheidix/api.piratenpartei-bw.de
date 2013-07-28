@@ -13,5 +13,4 @@ echo "sudo chmod -R 775 app/tmp"
 echo "sudo chgrp -R www-data app/tmp"
 echo "sudo chmod 775 app/webroot/js/stammtisch/data.js"
 echo "sudo chgrp www-data app/webroot/js/stammtisch/data.js"
-echo "sudo chmod 775 app/webroot/img/wikiimage"
-echo "sudo chgrp www-data app/webroot/img/wikiimage"
+

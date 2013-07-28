@@ -20,11 +20,6 @@ class WikiPage extends AppModel {
             'foreignKey'    => 'page_id',
             'dependent'     => true // delete if the WikiPage gets deleted
         )
-        ,'WikiImage' => array(
-                'className'     => 'WikiImage',
-                'foreignKey'    => 'page_id',
-                'dependent'     => true // delete if the WikiPage gets deleted
-        )
     );
     
     // TODO model validation needed
@@ -87,25 +82,6 @@ class WikiPage extends AppModel {
             $data['WikiPage']['updatedat'] = date('Y-m-d H:i:s', time());
             if($this->save($data)){
                 $data['WikiPage']['id'] = $this->id;
-                /*
-                // deactivated due to possible race condition
-                if(Configure::read('WikiImage.enabled')){
-                    App::import('Model', 'WikiImage');
-                    $wikiImageObj = new WikiImage();
-                    
-                    // Start transaction for this page title - otherwise other
-                    // threads could execute the same code and create a mess
-                    // in the file system. (orphan image files)
-                    // If we fail, uncached images with working image links
-                    // will be delivered.
-                    if($this->isFreeLock(md5($title))&&
-                        $this->lock(md5($title))
-                    ){
-                        $data = $wikiImageObj->replaceImages($data);
-                        $this->unlock(md5($title));
-                    }
-                }
-                */
                 $retval = $data;
             }
         }else{
