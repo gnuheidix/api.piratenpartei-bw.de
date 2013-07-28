@@ -14,7 +14,6 @@ class StammtischTestCase extends CakeTestCase {
         'app.stammtisch'
         ,'app.wikiPage'
         ,'app.wikiElement'
-        ,'app.wikiImage'
         ,'app.geoCoordinate'
     );
     

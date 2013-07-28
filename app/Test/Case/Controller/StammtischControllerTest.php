@@ -15,7 +15,6 @@ class StammtischControllerTest extends ControllerTestCase{
         'app.stammtisch'
         ,'app.wikiPage'
         ,'app.wikiElement'
-        ,'app.wikiImage'
         ,'app.geoCoordinate'
     );
     

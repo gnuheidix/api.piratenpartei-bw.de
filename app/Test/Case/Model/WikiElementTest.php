@@ -12,7 +12,6 @@ App::uses('WikiElement', 'Model');
 class WikiElementTestCase extends CakeTestCase {
     public $fixtures = array(
         'app.wikiElement'
-        ,'app.wikiImage'
         ,'app.wikiPage'
     );
     
